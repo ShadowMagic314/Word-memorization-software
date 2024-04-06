@@ -12,4 +12,5 @@
   vector.cpp
   video.cpp
   正在生成代码...
-  趣背单词.vcxproj -> D:\software\vs2022\public-project\趣背单词\x64\Debug\趣背单词.exe
+  LINK : 没有找到 D:\software\vs2022\public-project\Word-memorization-software\趣背单词\x64\Debug\趣背单词.exe 或上一个增量链接没有生成它；正在执行完全链接
+  趣背单词.vcxproj -> D:\software\vs2022\public-project\Word-memorization-software\趣背单词\x64\Debug\趣背单词.exe
