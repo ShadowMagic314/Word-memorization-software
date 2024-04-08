@@ -7,6 +7,8 @@
 #include"gameData.h"
 #include<conio.h>
 
+#define PROBABILITYINCREASEMULTIPLE 100//保底增加倍率
+
 struct gachaScene {
 	struct scene super;
 

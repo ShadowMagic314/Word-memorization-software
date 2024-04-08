@@ -8,14 +8,19 @@ void outGold(struct gachaScene* s, struct gameData* gd)
 	Sleep(500);
 
 	int r = rand() % 2;
+	if (gd->bigMinimumGuaranteeCnt == 1) {
+		r = 0;
+	}
 	int index = 0;
 	if (r == 0) {
 		index = 0;
+		gd->bigMinimumGuaranteeCnt = 0;
 	}
 	else if (r == 1) {
 		int m = 1;
 		int n = gd->characterDB.fiveStarCharacterNum - 1;
 		index = rand() % (n - m + 1) + m;//假如有四个角色，这里index就是1、2、3
+		gd->bigMinimumGuaranteeCnt++;
 	}
 	putimage(0, 0, s->bkout);
 	putTransparentImage(NULL, 0, 0, (IMAGE*)gd->characterDB.vecFiveStarCharacterMask.get(&gd->characterDB.vecFiveStarCharacterMask, index));
@@ -33,6 +38,7 @@ void outGold(struct gachaScene* s, struct gameData* gd)
 	setbkcolor(WHITE);
 
 	gd->ownFiveStarCharacters[index] = true;
+	gd->goldMinimumGuaranteeCnt = 0;
 }
 
 void outPurple(struct gachaScene* s, struct gameData* gd)
@@ -61,6 +67,7 @@ void outPurple(struct gachaScene* s, struct gameData* gd)
 	setbkcolor(WHITE);
 
 	gd->ownFourStarCharacters[r] = true;
+	gd->purpleMinimumGuaranteeCnt = 0;
 }
 
 void outBlue(struct gachaScene* s, struct gameData* gd)
@@ -91,6 +98,8 @@ void outBlue(struct gachaScene* s, struct gameData* gd)
 	setbkcolor(WHITE);
 
 	gd->exp += r;
+	gd->purpleMinimumGuaranteeCnt++;
+	gd->goldMinimumGuaranteeCnt++;
 }
 
 void singleGacha(struct gachaScene* s, struct gameData* gd)
@@ -100,6 +109,14 @@ void singleGacha(struct gachaScene* s, struct gameData* gd)
 
 	int m = 1, n = 60;
 	int r = rand() % (n - m + 1) + m;//1~60
+	if (gd->purpleMinimumGuaranteeCnt == 9) {
+		r = 2;
+	}
+	if (gd->goldMinimumGuaranteeCnt >= 50) {
+		for (int temp = 1; r != 1 && temp <= (gd->goldMinimumGuaranteeCnt - 50) * PROBABILITYINCREASEMULTIPLE; temp++) {
+			r = rand() % (n - m + 1) + m;
+		}
+	}
 	if (r==1) {
 		s->videoSingleToGold->play(s->videoSingleToGold);
 		outGold(s, gd);
@@ -123,6 +140,12 @@ void tenGacha(struct gachaScene* s, struct gameData* gd)
 
 	int m = 1, n = 6;
 	int r1 = rand() % (n - m + 1) + m;//1~6
+	if (gd->purpleMinimumGuaranteeCnt == 9) {
+		r1 = 2;
+	}
+	if (gd->goldMinimumGuaranteeCnt >= 50) {
+		for (int temp = 1; r1 != 1 && temp <= (gd->goldMinimumGuaranteeCnt-50) * PROBABILITYINCREASEMULTIPLE; temp++)r1 = rand() % (n - m + 1) + m;
+	}
 	if (r1 == 1) {//出金
 		s->videoTenToGold->play(s->videoTenToGold);
 

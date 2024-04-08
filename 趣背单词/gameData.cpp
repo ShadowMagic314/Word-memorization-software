@@ -96,6 +96,7 @@ void gameDataInit(struct gameData* gd)
 
 	gd->purpleMinimumGuaranteeCnt = 0;
 	gd->goldMinimumGuaranteeCnt = 0;
+	gd->bigMinimumGuaranteeCnt = 0;
 
 	gd->ownFiveStarCharacters = (bool*)malloc(sizeof(bool) * gd->characterDB.fiveStarCharacterNum);
 	if (gd->ownFiveStarCharacters == NULL) return;

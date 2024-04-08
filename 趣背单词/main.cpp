@@ -28,7 +28,7 @@ int main()
 
 			struct menuScene menuscene;
 			menuSceneInit(&menuscene);
-			gameLoop((scene*)&menuscene, 30, &gamedata);
+			gameLoop((scene*)&menuscene, 25, &gamedata);
 			menuSceneDestroy(&menuscene);
 		}
 

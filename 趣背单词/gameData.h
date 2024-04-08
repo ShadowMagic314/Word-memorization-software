@@ -18,6 +18,7 @@ struct gameData {
 	int levelSchedule;//1~20//1完成后是1
 	int purpleMinimumGuaranteeCnt;
 	int goldMinimumGuaranteeCnt;
+	int bigMinimumGuaranteeCnt;
 	bool* ownFiveStarCharacters;
 	bool* ownFourStarCharacters;
 
