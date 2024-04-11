@@ -62,10 +62,35 @@ void levelSceneDraw(struct levelScene* s, struct gameData* gd)
 				if (s->soundFlag[i] == true) {
 					s->soundFlag[i] = false;
 					s->isPlayErrorSound = true;
+					s->errorCnt++;
 				}
 			}
 		}
 	}
+
+	//播放音效
+	if (s->isPlayBingoSound == true) {
+		s->isPlayBingoSound = false;
+		mciSendString("close asset/sounds/bingoSound.wma", NULL, 0, NULL);
+		mciSendString("open asset/sounds/bingoSound.wma", NULL, 0, NULL);
+		mciSendString("play asset/sounds/bingoSound.wma", NULL, 0, NULL);
+	}
+	if (s->isPlayErrorSound == true) {
+		s->isPlayErrorSound = false;
+		mciSendString("close asset/sounds/errorSound.wma", NULL, 0, NULL);
+		mciSendString("open asset/sounds/errorSound.wma", NULL, 0, NULL);
+		mciSendString("play asset/sounds/errorSound.wma", NULL, 0, NULL);
+	}
+
+	//打印命数
+	switch (s->errorCnt)
+	{
+	case 0:putTransparentImage(NULL, 1492, 30, s->threeHearts); break;
+	case 1:putTransparentImage(NULL, 1492, 30, s->twoHearts); break;
+	case 2:putTransparentImage(NULL, 1492, 30, s->oneHearts); break;
+	case 3:putTransparentImage(NULL, 1492, 30, s->zeroHearts); FlushBatchDraw(); Sleep(1000); break;
+	}
+
 	//打印题号
 	settextcolor(BLACK);
 	settextstyle(100, 0, "微软雅黑");
@@ -138,6 +163,13 @@ void levelSceneUpdate(struct levelScene* s, struct gameData* gd)
 			s->selectedOption[i] = false;
 		}
 	}
+
+	//判断错误次数是否达到三个
+	if (s->errorCnt == 3) {
+		s->isQuit = true;
+		gd->isSelectLevelScene = true;
+	}
+
 	//判断是否成功
 	if (s->selectedOption[s->correctOption - 1] == true) {
 		s->isSuccess = true;
@@ -153,21 +185,10 @@ void levelSceneUpdate(struct levelScene* s, struct gameData* gd)
 			else {
 				gd->pinkballNum += REPEATPASSREWARDS;
 			}
+			gd->save(gd);//在这里存一次档
 		}
 	}
-	//播放音效
-	if(s->isPlayBingoSound == true) {
-		s->isPlayBingoSound = false;
-		mciSendString("close asset/sounds/bingoSound.wma", NULL, 0, NULL);
-		mciSendString("open asset/sounds/bingoSound.wma", NULL, 0, NULL);
-		mciSendString("play asset/sounds/bingoSound.wma", NULL, 0, NULL);
-	}
-	if (s->isPlayErrorSound == true) {
-		s->isPlayErrorSound = false;
-		mciSendString("close asset/sounds/errorSound.wma", NULL, 0, NULL);
-		mciSendString("open asset/sounds/errorSound.wma", NULL, 0, NULL);
-		mciSendString("play asset/sounds/errorSound.wma", NULL, 0, NULL);
-	}
+	
 	//播放读音
 	if (s->isPronounce == true) {
 		s->isPronounce = false;
@@ -210,6 +231,7 @@ void levelSceneControl(struct levelScene* s,ExMessage* msg, struct gameData* gd)
 					s->selectedOption[2] = true;
 					s->soundFlag[2] = true;
 				}
+
 			}
 			if (s->rectOptionD.left < msg->x && msg->x < s->rectOptionD.right && s->rectOptionD.bottom > msg->y && msg->y > s->rectOptionD.top)
 			{
@@ -256,6 +278,14 @@ void levelSceneInit(struct levelScene* s,struct gameData* gd)
 	loadimage(s->imgBingo, "asset/image/levelScene/bingo.png");
 	s->imgError = new IMAGE;
 	loadimage(s->imgError, "asset/image/levelScene/error.png");
+	s->threeHearts = new IMAGE;
+	loadimage(s->threeHearts, "asset/image/levelScene/threeHearts.png");
+	s->twoHearts = new IMAGE;
+	loadimage(s->twoHearts, "asset/image/levelScene/twoHearts.png");
+	s->oneHearts = new IMAGE;
+	loadimage(s->oneHearts, "asset/image/levelScene/oneHearts.png");
+	s->zeroHearts = new IMAGE;
+	loadimage(s->zeroHearts, "asset/image/levelScene/zeroHearts.png");
 
 	s->backBtn = (struct btn*)malloc(sizeof(struct btn));
 	btnInit(s->backBtn, 0, 0, 128, 129, "asset/image/levelScene/backBtn.png");
@@ -313,6 +343,8 @@ void levelSceneInit(struct levelScene* s,struct gameData* gd)
 	for (int i = 0; i < 4; i++) {
 		s->soundFlag[i] = false;
 	}
+
+	s->errorCnt = 0;
 }
 
 void levelSceneDestroy(struct levelScene* s)
@@ -320,6 +352,10 @@ void levelSceneDestroy(struct levelScene* s)
 	delete s->bkLevel;
 	delete s->imgBingo;
 	delete s->imgError;
+	delete s->threeHearts;
+	delete s->twoHearts;
+	delete s->oneHearts;
+	delete s->zeroHearts;
 
 	btnDestroy(s->backBtn);
 	free(s->backBtn);

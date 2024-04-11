@@ -57,6 +57,9 @@
     <ClInclude Include="video.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="pinBall.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="btn.cpp">
@@ -96,6 +99,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="video.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="pinBall.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

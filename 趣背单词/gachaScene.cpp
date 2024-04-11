@@ -107,6 +107,8 @@ void singleGacha(struct gachaScene* s, struct gameData* gd)
 	if (gd->pinkballNum < 1) return;
 	gd->pinkballNum--;
 
+	gd->save(gd);//在这里存一次档，如果用户强制退出就一无所获
+
 	int m = 1, n = 60;
 	int r = rand() % (n - m + 1) + m;//1~60
 	if (gd->purpleMinimumGuaranteeCnt == 9) {
@@ -117,6 +119,7 @@ void singleGacha(struct gachaScene* s, struct gameData* gd)
 			r = rand() % (n - m + 1) + m;
 		}
 	}
+
 	if (r==1) {
 		s->videoSingleToGold->play(s->videoSingleToGold);
 		outGold(s, gd);
@@ -137,6 +140,8 @@ void tenGacha(struct gachaScene* s, struct gameData* gd)
 {
 	if (gd->pinkballNum < 10) return;
 	gd->pinkballNum -= 10;
+
+	gd->save(gd);//在这里存一次档，如果用户强制退出就一无所获
 
 	int m = 1, n = 6;
 	int r1 = rand() % (n - m + 1) + m;//1~6
@@ -298,6 +303,7 @@ void gachaSceneDraw(struct gachaScene* s, struct gameData* gd)
 	putTransparentImage(NULL, 200, 0, s->pinkball);
 	settextcolor(BLUE);
 	settextstyle(100, 0, "微软雅黑");
+	setbkmode(TRANSPARENT);
 	char str[10];
 	sprintf(str, "x%d", gd->pinkballNum);
 	outtextxy(300, 0, str);
@@ -335,7 +341,7 @@ void gachaSceneControl(struct gachaScene* s, ExMessage* msg, struct gameData* gd
 		if (s->closeBtn->super.x < msg->x && msg->x < s->closeBtn->super.x + s->closeBtn->super.width) {
 			if (s->closeBtn->super.y < msg->y && msg->y < s->closeBtn->super.y + s->closeBtn->super.height) {
 				s->isQuit = true;
-				gd->isSelectLevelScene = true;
+				gd->isMenuScene = true;
 			}
 		}
 		else if (s->recordBtn->super.x < msg->x && msg->x < s->recordBtn->super.x + s->recordBtn->super.width) {

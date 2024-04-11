@@ -15,6 +15,10 @@ struct levelScene {
 	IMAGE* bkLevel;
 	IMAGE* imgBingo;
 	IMAGE* imgError;
+	IMAGE* threeHearts;
+	IMAGE* twoHearts;
+	IMAGE* oneHearts;
+	IMAGE* zeroHearts;
 
 	btn* backBtn;
 	btn* optionABtn;
@@ -39,6 +43,7 @@ struct levelScene {
 	int questionIndex;//现在是第几个问题
 	int correctAnswerIndex;//正确答案位
 	int errorAnswerIndex[3];//错误答案位
+	int errorCnt;
 
 	char words[20][50];
 	char chineses[20][100];
