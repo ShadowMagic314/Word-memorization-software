@@ -7,7 +7,7 @@
 #include"gameData.h"
 #include<conio.h>
 
-#define PROBABILITYINCREASEMULTIPLE 100//保底增加倍率
+#define PROBABILITY_INCREASE_MULTIPLE 100//保底增加倍率
 
 struct gachaScene {
 	struct scene super;
@@ -16,6 +16,7 @@ struct gachaScene {
 	IMAGE* bk2;
 	IMAGE* bkout;
 	IMAGE* pinkball;
+	IMAGE* imgExp;
 
 	video* videoSingleToGold;
 	video* videoSingleToPurple;

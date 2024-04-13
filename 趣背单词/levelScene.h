@@ -1,8 +1,8 @@
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS
-#define QUESTIONNUMEVERYLEVEL 20
-#define FIRSTPASSREWARDS 10//首次通关奖励粉球数
-#define REPEATPASSREWARDS 2//重复通关奖励粉球数
+#define QUES_TION_NUM_EVER_YLEVEL 20
+#define FIRST_PASS_REWARDS 10//首次通关奖励粉球数
+#define REPEAT_PASS_REWARDS 2//重复通关奖励粉球数
 
 #include"scene.h"
 #include"gameData.h"
@@ -19,6 +19,7 @@ struct levelScene {
 	IMAGE* twoHearts;
 	IMAGE* oneHearts;
 	IMAGE* zeroHearts;
+	IMAGE* badend;
 
 	btn* backBtn;
 	btn* optionABtn;

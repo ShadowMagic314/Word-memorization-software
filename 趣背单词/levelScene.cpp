@@ -88,7 +88,7 @@ void levelSceneDraw(struct levelScene* s, struct gameData* gd)
 	case 0:putTransparentImage(NULL, 1492, 30, s->threeHearts); break;
 	case 1:putTransparentImage(NULL, 1492, 30, s->twoHearts); break;
 	case 2:putTransparentImage(NULL, 1492, 30, s->oneHearts); break;
-	case 3:putTransparentImage(NULL, 1492, 30, s->zeroHearts); FlushBatchDraw(); Sleep(1000); break;
+	case 3:putTransparentImage(NULL, 1492, 30, s->zeroHearts);  break;
 	}
 
 	//打印题号
@@ -96,7 +96,7 @@ void levelSceneDraw(struct levelScene* s, struct gameData* gd)
 	settextstyle(100, 0, "微软雅黑");
 	setbkmode(TRANSPARENT);
 	char str[10];
-	sprintf(str, "%d/%d", s->questionIndex + 1, QUESTIONNUMEVERYLEVEL);
+	sprintf(str, "%d/%d", s->questionIndex + 1, QUES_TION_NUM_EVER_YLEVEL);
 	outtextxy(150, 15, str);
 	//绘制"下一关"按钮
 	if (s->isSuccess == true) {
@@ -115,13 +115,13 @@ void levelSceneUpdate(struct levelScene* s, struct gameData* gd)
 		int r = rand() % (n - m + 1) + m;
 		s->correctOption = r;
 		//随机生成错误的答案
-		int* record = (int*)malloc(sizeof(int*) * QUESTIONNUMEVERYLEVEL);
+		int* record = (int*)malloc(sizeof(int*) * QUES_TION_NUM_EVER_YLEVEL);
 		if (record == NULL) return;
-		for (int i = 0; i < QUESTIONNUMEVERYLEVEL; i++) {
+		for (int i = 0; i < QUES_TION_NUM_EVER_YLEVEL; i++) {
 			record[i] = 0;
 		}
 		m = 0;
-		n = QUESTIONNUMEVERYLEVEL - 1;
+		n = QUES_TION_NUM_EVER_YLEVEL - 1;
 		for (int i = 0; i < 3; i++) {
 			int num;
 			do {
@@ -143,13 +143,13 @@ void levelSceneUpdate(struct levelScene* s, struct gameData* gd)
 		int r = rand() % (n - m + 1) + m;
 		s->correctOption = r;
 		//随机生成错误的答案
-		int* record = (int*)malloc(sizeof(int*) * QUESTIONNUMEVERYLEVEL);
+		int* record = (int*)malloc(sizeof(int*) * QUES_TION_NUM_EVER_YLEVEL);
 		if (record == NULL) return;
-		for (int i = 0; i < QUESTIONNUMEVERYLEVEL; i++) {
+		for (int i = 0; i < QUES_TION_NUM_EVER_YLEVEL; i++) {
 			record[i] = 0;
 		}
 		m = 0;
-		n = QUESTIONNUMEVERYLEVEL - 1;
+		n = QUES_TION_NUM_EVER_YLEVEL - 1;
 		for (int i = 0; i < 3; i++) {
 			int num;
 			do {
@@ -167,6 +167,9 @@ void levelSceneUpdate(struct levelScene* s, struct gameData* gd)
 	//判断错误次数是否达到三个
 	if (s->errorCnt == 3) {
 		s->isQuit = true;
+		putTransparentImage(NULL, 0, 0, s->badend);//以后需要改成bool
+		FlushBatchDraw();
+		Sleep(2000);
 		gd->isSelectLevelScene = true;
 	}
 
@@ -174,16 +177,16 @@ void levelSceneUpdate(struct levelScene* s, struct gameData* gd)
 	if (s->selectedOption[s->correctOption - 1] == true) {
 		s->isSuccess = true;
 		//通关
-		if (s->questionIndex == QUESTIONNUMEVERYLEVEL - 1) {
+		if (s->questionIndex == QUES_TION_NUM_EVER_YLEVEL - 1) {
 			s->isQuit = true;
 			gd->isLevelFinishScene = true;
 
 			if (gd->level == gd->levelSchedule + 1) {
 				gd->levelSchedule++;
-				gd->pinkballNum += FIRSTPASSREWARDS;
+				gd->pinkballNum += FIRST_PASS_REWARDS;
 			}
 			else {
-				gd->pinkballNum += REPEATPASSREWARDS;
+				gd->pinkballNum += REPEAT_PASS_REWARDS;
 			}
 			gd->save(gd);//在这里存一次档
 		}
@@ -192,7 +195,7 @@ void levelSceneUpdate(struct levelScene* s, struct gameData* gd)
 	//播放读音
 	if (s->isPronounce == true) {
 		s->isPronounce = false;
-		int wordNum = (gd->level - 1) * QUESTIONNUMEVERYLEVEL + s->questionIndex + 1;
+		int wordNum = (gd->level - 1) * QUES_TION_NUM_EVER_YLEVEL + s->questionIndex + 1;
 		char pronunciationPath[100];
 		sprintf(pronunciationPath, "asset/sounds/words_en/%d.mp3", wordNum);
 		char command[100];
@@ -241,19 +244,19 @@ void levelSceneControl(struct levelScene* s,ExMessage* msg, struct gameData* gd)
 				}
 			}
 		}
-		if (s->backBtn->super.x < msg->x && msg->x < s->backBtn->super.x + s->backBtn->super.width && s->backBtn->super.y < msg->y && msg->y < s->backBtn->super.y + s->backBtn->super.height)
+		if (BTN_RANGE(s->backBtn))
 		{
 			s->isQuit = true;
 			gd->isSelectLevelScene = true;
 		}
-		if (s->nextBtn->super.x < msg->x && msg->x < s->nextBtn->super.x + s->nextBtn->super.width && s->nextBtn->super.y < msg->y && msg->y < s->nextBtn->super.y + s->nextBtn->super.height)
+		if (BTN_RANGE(s->nextBtn))
 		{
 			if (s->isSuccess == true) {
 				s->isNext = true;
 			}
 		}
 
-		if (s->pronunciationBtn->super.x < msg->x && msg->x < s->pronunciationBtn->super.x + s->pronunciationBtn->super.width && s->pronunciationBtn->super.y < msg->y && msg->y < s->pronunciationBtn->super.y + s->pronunciationBtn->super.height)
+		if (BTN_RANGE(s->pronunciationBtn))
 		{
 			s->isPronounce = true;
 		}
@@ -273,34 +276,36 @@ void levelSceneInit(struct levelScene* s,struct gameData* gd)
 	s->super.isQuit = (bool(*)(struct scene*, struct gameData* gd))levelSceneIsQuit;
 
 	s->bkLevel = new IMAGE;
-	loadimage(s->bkLevel, "asset/image/levelScene/bkLevel.jpg");
+	loadimage(s->bkLevel, "asset/levelScene/bkLevel.jpg");
 	s->imgBingo = new IMAGE;
-	loadimage(s->imgBingo, "asset/image/levelScene/bingo.png");
+	loadimage(s->imgBingo, "asset/levelScene/bingo.png");
 	s->imgError = new IMAGE;
-	loadimage(s->imgError, "asset/image/levelScene/error.png");
+	loadimage(s->imgError, "asset/levelScene/error.png");
 	s->threeHearts = new IMAGE;
-	loadimage(s->threeHearts, "asset/image/levelScene/threeHearts.png");
+	loadimage(s->threeHearts, "asset/levelScene/threeHearts.png");
 	s->twoHearts = new IMAGE;
-	loadimage(s->twoHearts, "asset/image/levelScene/twoHearts.png");
+	loadimage(s->twoHearts, "asset/levelScene/twoHearts.png");
 	s->oneHearts = new IMAGE;
-	loadimage(s->oneHearts, "asset/image/levelScene/oneHearts.png");
+	loadimage(s->oneHearts, "asset/levelScene/oneHearts.png");
 	s->zeroHearts = new IMAGE;
-	loadimage(s->zeroHearts, "asset/image/levelScene/zeroHearts.png");
+	loadimage(s->zeroHearts, "asset/levelScene/zeroHearts.png");
+	s->badend = new IMAGE;
+	loadimage(s->badend, "asset/levelFinishScene/badend.png");
 
 	s->backBtn = (struct btn*)malloc(sizeof(struct btn));
-	btnInit(s->backBtn, 0, 0, 128, 129, "asset/image/levelScene/backBtn.png");
+	btnInit(s->backBtn, 0, 0, 128, 129, "asset/levelScene/backBtn.png");
 	s->optionABtn = (struct btn*)malloc(sizeof(struct btn));
-	btnInit(s->optionABtn, 250, 300, 600, 200, "asset/image/levelScene/optionBtn.png");
+	btnInit(s->optionABtn, 250, 300, 600, 200, "asset/levelScene/optionBtn.png");
 	s->optionBBtn = (struct btn*)malloc(sizeof(struct btn));
-	btnInit(s->optionBBtn, 1050, 300, 600, 200, "asset/image/levelScene/optionBtn.png");
+	btnInit(s->optionBBtn, 1050, 300, 600, 200, "asset/levelScene/optionBtn.png");
 	s->optionCBtn = (struct btn*)malloc(sizeof(struct btn));
-	btnInit(s->optionCBtn, 250, 500, 600, 200, "asset/image/levelScene/optionBtn.png");
+	btnInit(s->optionCBtn, 250, 500, 600, 200, "asset/levelScene/optionBtn.png");
 	s->optionDBtn = (struct btn*)malloc(sizeof(struct btn));
-	btnInit(s->optionDBtn, 1050, 500, 600, 200, "asset/image/levelScene/optionBtn.png");
+	btnInit(s->optionDBtn, 1050, 500, 600, 200, "asset/levelScene/optionBtn.png");
 	s->nextBtn = (struct btn*)malloc(sizeof(struct btn));
-	btnInit(s->nextBtn, 600, 750, 750, 288, "asset/image/levelScene/nextBtn.png");
+	btnInit(s->nextBtn, 600, 750, 750, 288, "asset/levelScene/nextBtn.png");
 	s->pronunciationBtn = (struct btn*)malloc(sizeof(struct btn));
-	btnInit(s->pronunciationBtn, 908, 253, 78, 78, "asset/image/levelScene/pronunciation.png");
+	btnInit(s->pronunciationBtn, 908, 253, 78, 78, "asset/levelScene/pronunciation.png");
 
 	s->rectOptionA = { 250,330,850,530 };
 	s->rectOptionB = { 1050,330,1650,530 };
@@ -329,7 +334,7 @@ void levelSceneInit(struct levelScene* s,struct gameData* gd)
 	file2 = fopen(chinesesTxtPath, "r");
 	if (file1 == NULL) return;
 	if (file2 == NULL) return;
-	for (int i = 0; i < QUESTIONNUMEVERYLEVEL; i++) {
+	for (int i = 0; i < QUES_TION_NUM_EVER_YLEVEL; i++) {
 		fgets(s->words[i], sizeof(s->words[i]), file1);
 		fgets(s->chineses[i], sizeof(s->chineses[i]), file2);
 	}
@@ -356,6 +361,7 @@ void levelSceneDestroy(struct levelScene* s)
 	delete s->twoHearts;
 	delete s->oneHearts;
 	delete s->zeroHearts;
+	delete s->badend;
 
 	btnDestroy(s->backBtn);
 	free(s->backBtn);

@@ -15,7 +15,7 @@ void levelFinishSceneUpdate(struct levelFinishScene* lfs, struct gamedata* gd)
 void levelFinishSceneControl(struct levelFinishScene* lfs, ExMessage* msg, struct gameData* gd)
 {
 	if (msg->message == WM_LBUTTONDOWN) {
-		if (lfs->backBtn->super.x < msg->x && msg->x < lfs->backBtn->super.x + lfs->backBtn->super.width && lfs->backBtn->super.y < msg->y && msg->y < lfs->backBtn->super.y + lfs->backBtn->super.height)
+		if (BTN_RANGE(lfs->backBtn))
 		{
 			lfs->isQuit = true;
 			gd->isSelectLevelScene = true;
@@ -36,10 +36,10 @@ void levelFinishSceneInit(struct levelFinishScene* lfs)
 	lfs->super.isQuit = (bool(*)(struct scene*, struct gameData* gd))levelFinishSceneIsQuit;
 
 	lfs->bk = new IMAGE;
-	loadimage(lfs->bk, "asset/image/bkLevelFinish.png");
+	loadimage(lfs->bk, "asset/levelFinishScene/bkLevelFinish.png");
 
 	lfs->backBtn = (btn*)malloc(sizeof(btn));
-	btnInit(lfs->backBtn, 575, 750, 750, 288, "asset/image/backBtn2.png");
+	btnInit(lfs->backBtn, 575, 750, 750, 288, "asset/levelFinishScene/backBtn.png");
 
 	lfs->isQuit = false;
 }

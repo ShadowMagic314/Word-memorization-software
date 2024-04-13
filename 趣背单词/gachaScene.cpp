@@ -82,9 +82,8 @@ void outBlue(struct gachaScene* s, struct gameData* gd)
 	int r = rand() % (n - m + 1) + m;//经验值从1到10
 
 	putimage(0, 0, s->bkout);
-	IMAGE* imgExp = new IMAGE;
-	loadimage(imgExp, "asset/image/exp.png");
-	putTransparentImage(NULL, 0, 0, imgExp);
+	loadimage(s->imgExp, "asset/gachaScene/exp.png");
+	putTransparentImage(NULL, 0, 0, s->imgExp);
 
 	settextcolor(WHITE);
 	settextstyle(300, 0, "微软雅黑");
@@ -115,7 +114,7 @@ void singleGacha(struct gachaScene* s, struct gameData* gd)
 		r = 2;
 	}
 	if (gd->goldMinimumGuaranteeCnt >= 50) {
-		for (int temp = 1; r != 1 && temp <= (gd->goldMinimumGuaranteeCnt - 50) * PROBABILITYINCREASEMULTIPLE; temp++) {
+		for (int temp = 1; r != 1 && temp <= (gd->goldMinimumGuaranteeCnt - 50) * PROBABILITY_INCREASE_MULTIPLE; temp++) {
 			r = rand() % (n - m + 1) + m;
 		}
 	}
@@ -149,7 +148,7 @@ void tenGacha(struct gachaScene* s, struct gameData* gd)
 		r1 = 2;
 	}
 	if (gd->goldMinimumGuaranteeCnt >= 50) {
-		for (int temp = 1; r1 != 1 && temp <= (gd->goldMinimumGuaranteeCnt-50) * PROBABILITYINCREASEMULTIPLE; temp++)r1 = rand() % (n - m + 1) + m;
+		for (int temp = 1; r1 != 1 && temp <= (gd->goldMinimumGuaranteeCnt-50) * PROBABILITY_INCREASE_MULTIPLE; temp++)r1 = rand() % (n - m + 1) + m;
 	}
 	if (r1 == 1) {//出金
 		s->videoTenToGold->play(s->videoTenToGold);
@@ -328,26 +327,18 @@ void gachaSceneUpdate(struct gachaScene* s, struct gameData* gd)
 void gachaSceneControl(struct gachaScene* s, ExMessage* msg, struct gameData* gd)
 {
 	if (msg->message == WM_LBUTTONDOWN) {
-		if (s->singleBtn->super.x < msg->x && msg->x < s->singleBtn->super.x + s->singleBtn->super.width) {
-			if (s->singleBtn->super.y < msg->y && msg->y < s->singleBtn->super.y + s->singleBtn->super.height) {
-				s->isSingleGacha = true;
-			}
+		if (BTN_RANGE(s->singleBtn)) {
+			s->isSingleGacha = true;
 		}
-		if (s->tenBtn->super.x < msg->x && msg->x < s->tenBtn->super.x + s->tenBtn->super.width) {
-			if (s->tenBtn->super.y < msg->y && msg->y < s->tenBtn->super.y + s->tenBtn->super.height) {
-				s->isTenGacha = true;
-			}
+		if (BTN_RANGE(s->tenBtn)) {
+			s->isTenGacha = true;
 		}
-		if (s->closeBtn->super.x < msg->x && msg->x < s->closeBtn->super.x + s->closeBtn->super.width) {
-			if (s->closeBtn->super.y < msg->y && msg->y < s->closeBtn->super.y + s->closeBtn->super.height) {
-				s->isQuit = true;
-				gd->isMenuScene = true;
-			}
+		if (BTN_RANGE(s->closeBtn)) {
+			s->isQuit = true;
+			gd->isMenuScene = true;
 		}
-		else if (s->recordBtn->super.x < msg->x && msg->x < s->recordBtn->super.x + s->recordBtn->super.width) {
-			if (s->recordBtn->super.y < msg->y && msg->y < s->recordBtn->super.y + s->recordBtn->super.height) {
-				s->isRecord = true;
-			}
+		else if (BTN_RANGE(s->recordBtn)) {
+			s->isRecord = true;
 		}
 	}
 }
@@ -365,13 +356,15 @@ void gachaSceneInit(struct gachaScene* s)
 	s->super.isQuit = (bool (*)(struct scene*, struct gameData* gd))gachaSceneIsQuit;
 
 	s->bk1 = new IMAGE;
-	loadimage(s->bk1, "asset/image/bk1.jpg");
+	loadimage(s->bk1, "asset/gachaScene/bk1.jpg");
 	s->bk2 = new IMAGE;
-	loadimage(s->bk2, "asset/image/bk2.jpg");
+	loadimage(s->bk2, "asset/gachaScene/bk2.jpg");
 	s->bkout = new IMAGE;
-	loadimage(s->bkout, "asset/image/bkout.jpg");
+	loadimage(s->bkout, "asset/gachaScene/bkout.jpg");
 	s->pinkball = new IMAGE;
-	loadimage(s->pinkball, "asset/image/pinkball.png");
+	loadimage(s->pinkball, "asset/gachaScene/pinkball.png");
+	s->imgExp = new IMAGE;
+	loadimage(s->imgExp, "asset/gachaScene/imgExp.png");
 
 	s->videoSingleToGold = (struct video*)malloc(sizeof(struct video));
 	videoInit(s->videoSingleToGold,"asset/video/singleToGold","asset/sounds/gachaSound.wma",177,30);
@@ -386,13 +379,13 @@ void gachaSceneInit(struct gachaScene* s)
 	videoInit(s->videoTenToPurple, "asset/video/tenToPurple", "asset/sounds/gachaSound.wma", 177, 30);
 
 	s->singleBtn = (struct btn*)malloc(sizeof(struct btn));
-	btnInit(s->singleBtn, 50, 900, 532, 117, "asset/image/singleBtn.png");
+	btnInit(s->singleBtn, 50, 900, 532, 117, "asset/gachaScene/singleBtn.png");
 	s->tenBtn = (struct btn*)malloc(sizeof(struct btn));
-	btnInit(s->tenBtn, 1300, 900, 532, 117, "asset/image/tenBtn.png");
+	btnInit(s->tenBtn, 1300, 900, 532, 117, "asset/gachaScene/tenBtn.png");
 	s->closeBtn = (struct btn*)malloc(sizeof(struct btn));
-	btnInit(s->closeBtn, 0, 0, 101, 80, "asset/image/closeBtn.png");
+	btnInit(s->closeBtn, 0, 0, 101, 80, "asset/gachaScene/closeBtn.png");
 	s->recordBtn = (struct btn*)malloc(sizeof(struct btn));
-	btnInit(s->recordBtn, 1920 - 187 - 50, 0, 187, 80, "asset/image/recordBtn.png");
+	btnInit(s->recordBtn, 1920 - 187 - 50, 0, 187, 80, "asset/gachaScene/recordBtn.png");
 
 	s->isSingleGacha = false;
 	s->isTenGacha = false;
@@ -406,6 +399,7 @@ void gachaSceneDestroy(struct gachaScene* s)
 	delete s->bk2;
 	delete s->bkout;
 	delete s->pinkball;
+	delete s->imgExp;
 
 	videoDestroy(s->videoSingleToGold);
 	free(s->videoSingleToGold);

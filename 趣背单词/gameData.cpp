@@ -19,7 +19,7 @@ void gameDataLoad(struct gameData* gd)//¶Áµµº¯Êý
 	fgets(str, sizeof(str), gdFile);
 	gd->goldMinimumGuaranteeCnt = atoi(str);
 
-	for (int i = 0; i < FIVESTARCHARACTERNUM; i++) {
+	for (int i = 0; i < FIVE_STAR_CHARACTERNUM; i++) {
 		fgets(str, sizeof(str), gdFile);
 		int num = atoi(str);
 		if (num == 0) {
@@ -29,7 +29,7 @@ void gameDataLoad(struct gameData* gd)//¶Áµµº¯Êý
 			gd->ownFiveStarCharacters[i] = true;
 		}
 	}
-	for (int i = 0; i < FOURSTARCHARACTERNUM; i++) {
+	for (int i = 0; i < FOUR_STAR_CHARACTERNUM; i++) {
 		fgets(str, sizeof(str), gdFile);
 		int num = atoi(str);
 		if (num == 0) {
@@ -62,7 +62,7 @@ void gameDataSave(struct gameData* gd)//´æµµº¯Êý
 	sprintf(str, "%d\n", gd->goldMinimumGuaranteeCnt);
 	fputs(str, gdFile);
 
-	for (int i = 0; i < FIVESTARCHARACTERNUM; i++) {
+	for (int i = 0; i < FIVE_STAR_CHARACTERNUM; i++) {
 		if (gd->ownFiveStarCharacters[i] == true) {
 			fputs("1\n", gdFile);
 		}
@@ -70,7 +70,7 @@ void gameDataSave(struct gameData* gd)//´æµµº¯Êý
 			fputs("0\n", gdFile);
 		}
 	}
-	for (int i = 0; i < FOURSTARCHARACTERNUM; i++) {
+	for (int i = 0; i < FOUR_STAR_CHARACTERNUM; i++) {
 		if (gd->ownFiveStarCharacters[i] == true) {
 			fputs("1\n", gdFile);
 		}
