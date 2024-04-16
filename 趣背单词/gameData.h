@@ -34,6 +34,14 @@ struct gameData {
 	bool isMenuScene;
 
 	bool isDeveloperMode;
+
+	int mode;
+	/* 1-经典模式
+	   2-限时模式
+	   3-无尽模式
+	*/
+	int lastMode;
+	bool isSwitchMode;
 };
 
 void gameDataInit(struct gameData*gd);

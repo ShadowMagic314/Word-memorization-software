@@ -45,7 +45,7 @@
     <ClInclude Include="scene.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="selectLevelScene.h">
+    <ClInclude Include="selectLevelClassics.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="sprite.h">
@@ -58,6 +58,15 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="pinBall.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="selectLevelScene.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="selectLevelTimer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="selectLevelEndless.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -92,7 +101,7 @@
     <ClCompile Include="menuScene.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="selectLevelScene.cpp">
+    <ClCompile Include="selectLevelClassics.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="vector.cpp">
@@ -102,6 +111,15 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="pinBall.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="seleceLevelScene.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="selectLevelTimer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="selectLevelEndless.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -36,9 +36,9 @@ int main()
 			gamedata.isSelectLevelScene = false;
 
 			struct selectLevelScene selectlevelscene;
-			selectLevelSceneInit(&selectlevelscene);
+			selectLevelSceneInit(&selectlevelscene, &gamedata);
 			gameLoop((scene*)&selectlevelscene, 30, &gamedata);
-			selectLevelSceneDestroy(&selectlevelscene);
+			selectLevelSceneDestroy(&selectlevelscene, &gamedata);
 		}
 
 		if (gamedata.isLevelScane == true) {

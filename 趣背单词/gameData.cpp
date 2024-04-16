@@ -113,6 +113,12 @@ void gameDataInit(struct gameData* gd)
 	gd->isMenuScene = true;
 
 	gd->isDeveloperMode = false;
+
+	gd->mode = 1;//开始是经典模式
+	gd->lastMode = 1;
+
+	gd->lastMode = -1;
+	gd->isSwitchMode = false;
 }
 
 void gameDataDestroy(struct gameData* gd)

@@ -30,7 +30,10 @@
     <ClInclude Include="menuScene.h" />
     <ClInclude Include="pinBall.h" />
     <ClInclude Include="scene.h" />
+    <ClInclude Include="selectLevelClassics.h" />
+    <ClInclude Include="selectLevelEndless.h" />
     <ClInclude Include="selectLevelScene.h" />
+    <ClInclude Include="selectLevelTimer.h" />
     <ClInclude Include="sprite.h" />
     <ClInclude Include="vector.h" />
     <ClInclude Include="video.h" />
@@ -47,7 +50,10 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menuScene.cpp" />
     <ClCompile Include="pinBall.cpp" />
-    <ClCompile Include="selectLevelScene.cpp" />
+    <ClCompile Include="seleceLevelScene.cpp" />
+    <ClCompile Include="selectLevelClassics.cpp" />
+    <ClCompile Include="selectLevelEndless.cpp" />
+    <ClCompile Include="selectLevelTimer.cpp" />
     <ClCompile Include="vector.cpp" />
     <ClCompile Include="video.cpp" />
   </ItemGroup>

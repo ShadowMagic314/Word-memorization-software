@@ -51,14 +51,14 @@ void levelSceneDraw(struct levelScene* s, struct gameData* gd)
 		}
 		if (s->selectedOption[i] == true) {
 			if (s->correctOption == i + 1) {
-				putTransparentImage(NULL, btnTemp->super.x + 500, btnTemp->super.y + 15, s->imgBingo);
+				putTransparentImage(NULL, btnTemp->super.x + 550, btnTemp->super.y + 30, s->imgBingo);
 				if (s->soundFlag[i]==true) {
 					s->soundFlag[i] = false;
 					s->isPlayBingoSound = true;
 				}
 			}
 			else {
-				putTransparentImage(NULL, btnTemp->super.x + 500, btnTemp->super.y + 15, s->imgError);
+				putTransparentImage(NULL, btnTemp->super.x + 550, btnTemp->super.y + 30, s->imgError);
 				if (s->soundFlag[i] == true) {
 					s->soundFlag[i] = false;
 					s->isPlayErrorSound = true;
@@ -117,6 +117,9 @@ void levelSceneUpdate(struct levelScene* s, struct gameData* gd)
 		int n = 4;
 		int r = rand() % (n - m + 1) + m;
 		s->correctOption = r;
+		if (gd->isDeveloperMode == true) {
+			s->correctOption = 1;
+		}
 		//随机生成错误的答案
 		int* record = (int*)malloc(sizeof(int*) * QUESTION_NUM_EVERY_LEVEL);
 		if (record == NULL) return;
@@ -299,22 +302,22 @@ void levelSceneInit(struct levelScene* s,struct gameData* gd)
 	s->backBtn = (struct btn*)malloc(sizeof(struct btn));
 	btnInit(s->backBtn, 0, 0, 128, 129, "asset/levelScene/backBtn.png");
 	s->optionABtn = (struct btn*)malloc(sizeof(struct btn));
-	btnInit(s->optionABtn, 250, 300, 600, 200, "asset/levelScene/optionBtn.png");
+	btnInit(s->optionABtn, 253, 351, 655, 233, "asset/levelScene/optionBtn.png");
 	s->optionBBtn = (struct btn*)malloc(sizeof(struct btn));
-	btnInit(s->optionBBtn, 1050, 300, 600, 200, "asset/levelScene/optionBtn.png");
+	btnInit(s->optionBBtn, 1003, 351, 655, 233, "asset/levelScene/optionBtn.png");
 	s->optionCBtn = (struct btn*)malloc(sizeof(struct btn));
-	btnInit(s->optionCBtn, 250, 500, 600, 200, "asset/levelScene/optionBtn.png");
+	btnInit(s->optionCBtn, 253, 625, 655, 233, "asset/levelScene/optionBtn.png");
 	s->optionDBtn = (struct btn*)malloc(sizeof(struct btn));
-	btnInit(s->optionDBtn, 1050, 500, 600, 200, "asset/levelScene/optionBtn.png");
+	btnInit(s->optionDBtn, 1003, 625, 655, 233, "asset/levelScene/optionBtn.png");
 	s->nextBtn = (struct btn*)malloc(sizeof(struct btn));
-	btnInit(s->nextBtn, 600, 750, 750, 288, "asset/levelScene/nextBtn.png");
+	btnInit(s->nextBtn, 600, 750, 750, 288, "asset/levelScene/nextBtn.png"); 
 	s->pronunciationBtn = (struct btn*)malloc(sizeof(struct btn));
 	btnInit(s->pronunciationBtn, 908, 253, 78, 78, "asset/levelScene/pronunciation.png");
 
-	s->rectOptionA = { 250,330,850,530 };
-	s->rectOptionB = { 1050,330,1650,530 };
-	s->rectOptionC = { 250,530,850,730 };
-	s->rectOptionD = { 1050,530,1650,730 };
+	s->rectOptionA = { 280,361,881,574 };//+27,+10,+601,+213
+	s->rectOptionB = { 1030,361,1631,574 };
+	s->rectOptionC = { 280,635,881,848 };
+	s->rectOptionD = { 1030,635,1631,848 };
 	s->rectQuestion = { 250,100,1650,250 };
 
 	for (int i = 0; i < 4; i++) {
