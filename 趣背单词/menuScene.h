@@ -9,6 +9,7 @@
 #include <graphics.h>
 
 #define ANIMATIONIMAGENUM 50
+#define RECT_RANGE(quadrant) quadrant.left < s->mouseX && s->mouseX < quadrant.right && quadrant.top < s->mouseY && s->mouseY < quadrant.bottom
 
 struct menuScene {
 	struct scene super;
@@ -36,6 +37,12 @@ struct menuScene {
 	int longPressTriggerCnt;
 	int mouseX;
 	int mouseY;
+	int developerModeCnt;
+
+	RECT firstQuadrant;
+	RECT secondQuadrant;
+	RECT thirdQuadrant;
+	RECT fourthQuadrant;
 };
 
 void menuSceneInit(struct menuScene* s);

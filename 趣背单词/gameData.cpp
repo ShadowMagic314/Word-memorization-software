@@ -111,6 +111,8 @@ void gameDataInit(struct gameData* gd)
 	gd->isLevelFinishScene = false;
 	gd->isSelectLevelScene = false;
 	gd->isMenuScene = true;
+
+	gd->isDeveloperMode = false;
 }
 
 void gameDataDestroy(struct gameData* gd)

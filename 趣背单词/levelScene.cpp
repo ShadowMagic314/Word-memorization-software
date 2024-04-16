@@ -62,7 +62,10 @@ void levelSceneDraw(struct levelScene* s, struct gameData* gd)
 				if (s->soundFlag[i] == true) {
 					s->soundFlag[i] = false;
 					s->isPlayErrorSound = true;
-					s->errorCnt++;
+
+					if (gd->isDeveloperMode == false) {
+						s->errorCnt++;
+					}
 				}
 			}
 		}
@@ -96,7 +99,7 @@ void levelSceneDraw(struct levelScene* s, struct gameData* gd)
 	settextstyle(100, 0, "微软雅黑");
 	setbkmode(TRANSPARENT);
 	char str[10];
-	sprintf(str, "%d/%d", s->questionIndex + 1, QUES_TION_NUM_EVER_YLEVEL);
+	sprintf(str, "%d/%d", s->questionIndex + 1, QUESTION_NUM_EVERY_LEVEL);
 	outtextxy(150, 15, str);
 	//绘制"下一关"按钮
 	if (s->isSuccess == true) {
@@ -115,13 +118,13 @@ void levelSceneUpdate(struct levelScene* s, struct gameData* gd)
 		int r = rand() % (n - m + 1) + m;
 		s->correctOption = r;
 		//随机生成错误的答案
-		int* record = (int*)malloc(sizeof(int*) * QUES_TION_NUM_EVER_YLEVEL);
+		int* record = (int*)malloc(sizeof(int*) * QUESTION_NUM_EVERY_LEVEL);
 		if (record == NULL) return;
-		for (int i = 0; i < QUES_TION_NUM_EVER_YLEVEL; i++) {
+		for (int i = 0; i < QUESTION_NUM_EVERY_LEVEL; i++) {
 			record[i] = 0;
 		}
 		m = 0;
-		n = QUES_TION_NUM_EVER_YLEVEL - 1;
+		n = QUESTION_NUM_EVERY_LEVEL - 1;
 		for (int i = 0; i < 3; i++) {
 			int num;
 			do {
@@ -135,6 +138,7 @@ void levelSceneUpdate(struct levelScene* s, struct gameData* gd)
 	if (s->isNext == true) {
 		s->isNext = false;
 		s->isSuccess = false;
+		s->isPronounce = true;
 		s->questionIndex++;
 		s->correctAnswerIndex = s->questionIndex;
 		//随机生成正确选项的位置
@@ -143,13 +147,13 @@ void levelSceneUpdate(struct levelScene* s, struct gameData* gd)
 		int r = rand() % (n - m + 1) + m;
 		s->correctOption = r;
 		//随机生成错误的答案
-		int* record = (int*)malloc(sizeof(int*) * QUES_TION_NUM_EVER_YLEVEL);
+		int* record = (int*)malloc(sizeof(int*) * QUESTION_NUM_EVERY_LEVEL);
 		if (record == NULL) return;
-		for (int i = 0; i < QUES_TION_NUM_EVER_YLEVEL; i++) {
+		for (int i = 0; i < QUESTION_NUM_EVERY_LEVEL; i++) {
 			record[i] = 0;
 		}
 		m = 0;
-		n = QUES_TION_NUM_EVER_YLEVEL - 1;
+		n = QUESTION_NUM_EVERY_LEVEL - 1;
 		for (int i = 0; i < 3; i++) {
 			int num;
 			do {
@@ -177,7 +181,7 @@ void levelSceneUpdate(struct levelScene* s, struct gameData* gd)
 	if (s->selectedOption[s->correctOption - 1] == true) {
 		s->isSuccess = true;
 		//通关
-		if (s->questionIndex == QUES_TION_NUM_EVER_YLEVEL - 1) {
+		if (s->questionIndex == QUESTION_NUM_EVERY_LEVEL - 1) {
 			s->isQuit = true;
 			gd->isLevelFinishScene = true;
 
@@ -195,7 +199,7 @@ void levelSceneUpdate(struct levelScene* s, struct gameData* gd)
 	//播放读音
 	if (s->isPronounce == true) {
 		s->isPronounce = false;
-		int wordNum = (gd->level - 1) * QUES_TION_NUM_EVER_YLEVEL + s->questionIndex + 1;
+		int wordNum = (gd->level - 1) * QUESTION_NUM_EVERY_LEVEL + s->questionIndex + 1;
 		char pronunciationPath[100];
 		sprintf(pronunciationPath, "asset/sounds/words_en/%d.mp3", wordNum);
 		char command[100];
@@ -318,12 +322,12 @@ void levelSceneInit(struct levelScene* s,struct gameData* gd)
 	}
 
 	s->isQuit = false;
-	s->isNext = false;
+	s->isNext = true;
 	s->isSuccess = false;
 
 	s->correctOption = -1;
 	
-	s->questionIndex = 0;
+	s->questionIndex = -1;//开始就+1
 
 	char wordsTxtPath[50];
 	char chinesesTxtPath[50];
@@ -334,7 +338,7 @@ void levelSceneInit(struct levelScene* s,struct gameData* gd)
 	file2 = fopen(chinesesTxtPath, "r");
 	if (file1 == NULL) return;
 	if (file2 == NULL) return;
-	for (int i = 0; i < QUES_TION_NUM_EVER_YLEVEL; i++) {
+	for (int i = 0; i < QUESTION_NUM_EVERY_LEVEL; i++) {
 		fgets(s->words[i], sizeof(s->words[i]), file1);
 		fgets(s->chineses[i], sizeof(s->chineses[i]), file2);
 	}

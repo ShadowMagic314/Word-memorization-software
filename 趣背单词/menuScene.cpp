@@ -22,6 +22,13 @@ void menuSceneDraw(struct menuScene* s, struct gameData* gd)
 	}
 
 	s->pinBall->super.draw((sprite*)s->pinBall);
+
+	if (gd->isDeveloperMode == true) {
+		settextcolor(BLACK);
+		settextstyle(140, 0, "微软雅黑");
+		setbkmode(TRANSPARENT);
+		outtextxy(0, 0, "开发者模式已启用！");
+	}
 }
 
 void menuSceneUpdate(struct menuScene* s, struct gameData* gd)
@@ -34,6 +41,41 @@ void menuSceneUpdate(struct menuScene* s, struct gameData* gd)
 	if (s->isLongPress == true) {
 		s->pinBall->x = s->mouseX;
 		s->pinBall->y = s->mouseY;
+		
+		switch (s->developerModeCnt) {//拖着球从第四象限开始，顺时针走一圈，逆时针走一圈
+		case 0:if (RECT_RANGE(s->fourthQuadrant)) s->developerModeCnt++; else s->developerModeCnt = 0; break;
+		case 1:if (RECT_RANGE(s->firstQuadrant)) s->developerModeCnt++; else if (RECT_RANGE(s->fourthQuadrant)) {}
+			  else s->developerModeCnt = 0; break;
+		case 2:if (RECT_RANGE(s->secondQuadrant)) s->developerModeCnt++; else if (RECT_RANGE(s->firstQuadrant)) {}
+			  else s->developerModeCnt = 0; break;
+		case 3:if (RECT_RANGE(s->thirdQuadrant)) s->developerModeCnt++; else if (RECT_RANGE(s->secondQuadrant)) {}
+			  else s->developerModeCnt = 0; break;
+		case 4:if (RECT_RANGE(s->fourthQuadrant)) s->developerModeCnt++; else if (RECT_RANGE(s->thirdQuadrant)) {}
+			  else s->developerModeCnt = 0; break;
+		case 5:if (RECT_RANGE(s->thirdQuadrant)) s->developerModeCnt++; else if (RECT_RANGE(s->fourthQuadrant)) {}
+			  else s->developerModeCnt = 0; break;
+		case 6:if (RECT_RANGE(s->secondQuadrant)) s->developerModeCnt++; else if (RECT_RANGE(s->thirdQuadrant)) {}
+			  else s->developerModeCnt = 0; break;
+		case 7:if (RECT_RANGE(s->firstQuadrant)) s->developerModeCnt++; else if (RECT_RANGE(s->secondQuadrant)) {}
+			  else s->developerModeCnt = 0; break;
+		case 8:if (RECT_RANGE(s->fourthQuadrant)) s->developerModeCnt++; else if (RECT_RANGE(s->firstQuadrant)) {}
+			  else s->developerModeCnt = 0; break;
+		}
+		if (s->developerModeCnt == 9) {
+			s->developerModeCnt = -1;
+			gd->isDeveloperMode = true;
+
+			//其实这些写在这里不合适，但是目前就是在meunScene里开启开发者模式，所以写这里也没问题
+			//有些暂时没用到的数据没有加
+			gd->pinkballNum = 999999;
+			gd->levelSchedule = 120;
+			for (int i = 0; i < gd->characterDB.fiveStarCharacterNum; i++) {
+				gd->ownFiveStarCharacters[i] = true;
+			}
+			for (int i = 0; i < gd->characterDB.fourStarCharacterNum; i++) {
+				gd->ownFourStarCharacters[i] = true;
+			}
+		}
 	}
 	else {
 		s->pinBall->super.update((sprite*)s->pinBall);
@@ -156,6 +198,12 @@ void menuSceneInit(struct menuScene* s)
 	s->longPressTriggerCnt = 0;
 	s->mouseX = 0;
 	s->mouseY = 0;
+	s->developerModeCnt = 0;
+
+	s->firstQuadrant = { 960,0,1920,540 };
+	s->secondQuadrant = { 960,540,1920,1080 };
+	s->thirdQuadrant = { 0,540,960,1080 };
+	s->fourthQuadrant = { 0,0,960,540 };
 }
 
 void menuSceneDestroy(struct menuScene* s)

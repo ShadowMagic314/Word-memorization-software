@@ -1,6 +1,6 @@
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS
-#define QUES_TION_NUM_EVER_YLEVEL 20
+#define QUESTION_NUM_EVERY_LEVEL 20
 #define FIRST_PASS_REWARDS 10//首次通关奖励粉球数
 #define REPEAT_PASS_REWARDS 2//重复通关奖励粉球数
 
