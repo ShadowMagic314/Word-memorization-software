@@ -36,7 +36,7 @@
     <ClInclude Include="levelFinishScene.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="levelScene.h">
+    <ClInclude Include="levelClassics.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="menuScene.h">
@@ -69,6 +69,18 @@
     <ClInclude Include="selectLevelEndless.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="levelScene.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="levelTimer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="levelEndless.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="bkMusic.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="btn.cpp">
@@ -92,7 +104,7 @@
     <ClCompile Include="levelFinishScene.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="levelScene.cpp">
+    <ClCompile Include="levelClassics.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
@@ -120,6 +132,18 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="selectLevelEndless.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="levelScene.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="levelTimer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="levelEndless.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="bkMusic.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

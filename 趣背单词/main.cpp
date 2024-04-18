@@ -10,6 +10,7 @@
 #include"selectLevelScene.h"
 #include"levelFinishScene.h"
 #include"menuScene.h"
+#include"bkMusic.h"
 
 int main()
 {
@@ -25,36 +26,44 @@ int main()
 	while (1) {
 		if (gamedata.isMenuScene == true) {
 			gamedata.isMenuScene = false;
+			gamedata.isbkMusic = true;
 
 			struct menuScene menuscene;
 			menuSceneInit(&menuscene);
+			bkMusic(&gamedata);
 			gameLoop((scene*)&menuscene, 25, &gamedata);
 			menuSceneDestroy(&menuscene);
 		}
 
 		if (gamedata.isSelectLevelScene == true) {
 			gamedata.isSelectLevelScene = false;
+			gamedata.isbkMusic = true;
 
 			struct selectLevelScene selectlevelscene;
 			selectLevelSceneInit(&selectlevelscene, &gamedata);
+			bkMusic(&gamedata);
 			gameLoop((scene*)&selectlevelscene, 30, &gamedata);
 			selectLevelSceneDestroy(&selectlevelscene, &gamedata);
 		}
 
 		if (gamedata.isLevelScane == true) {
 			gamedata.isLevelScane = false;
+			gamedata.isbkMusic = false;
 
 			struct levelScene levelscene;
 			levelSceneInit(&levelscene, &gamedata);
+			bkMusic(&gamedata);
 			gameLoop((scene*)&levelscene, 30, &gamedata);
-			levelSceneDestroy(&levelscene);
+			levelSceneDestroy(&levelscene, &gamedata);
 		}
 
 		if (gamedata.isGachaScene == true) {
 			gamedata.isGachaScene = false;
+			gamedata.isbkMusic = false;
 
 			struct gachaScene gachascene;
 			gachaSceneInit(&gachascene);
+			bkMusic(&gamedata);
 			gameLoop((scene*)&gachascene, 30, &gamedata);
 			gachaSceneDestroy(&gachascene);
 		}

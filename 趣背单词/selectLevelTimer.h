@@ -7,6 +7,8 @@
 #include "btn.h"
 #include <stdio.h>
 
+#define LEVEL_BLOCK_NUM 4
+
 struct selectLevelTimer {
 	struct scene super;
 
@@ -17,6 +19,7 @@ struct selectLevelTimer {
 
 	btn* homeBtn;
 	btn* switchModeBtn;
+	btn* levelBlockBtn[LEVEL_BLOCK_NUM];
 };
 
 void selectLevelTimerInit(struct selectLevelTimer* s);

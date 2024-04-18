@@ -7,6 +7,9 @@ void selectLevelTimerDraw(struct selectLevelTimer* s, struct gameData* gd)
 
 	s->homeBtn->super.draw((sprite*)s->homeBtn);
 	s->switchModeBtn->super.draw((sprite*)s->switchModeBtn);
+	for (int i = 0; i < LEVEL_BLOCK_NUM; i++) {
+		s->levelBlockBtn[i]->super.draw((sprite*)s->levelBlockBtn[i]);
+	}
 }
 
 void selectLevelTimerUpdate(struct selectLevelTimer* s, struct gameData* gd)
@@ -25,6 +28,17 @@ void selectLevelTimerControl(struct selectLevelTimer* s, ExMessage* msg, struct 
 		if (BTN_RANGE(s->switchModeBtn)) {
 			gd->isSwitchMode = true;
 			gd->mode = 3;
+		}
+		for (int i = 0; i < LEVEL_BLOCK_NUM; i++) {
+			if (BTN_RANGE(s->levelBlockBtn[i])) {
+				//后面加别的//目前仅供测试
+				switch (i) {
+				case 0:s->isQuit = true; gd->isLevelScane = true; gd->countdown = { 0,1,0 }; break;
+				case 1:s->isQuit = true; gd->isLevelScane = true; gd->countdown = { 0,5,0 }; break;
+				case 2:s->isQuit = true; gd->isLevelScane = true; gd->countdown = { 0,15,0 }; break;
+				//case 3:s->isQuit = true; gd->isLevelScane = true; break;//自定义后面加
+				}
+			}
 		}
 	}
 }
@@ -52,6 +66,16 @@ void selectLevelTimerInit(struct selectLevelTimer* s)
 	btnInit(s->homeBtn, 45, 34, 156, 147, "asset/selectLevelScene/timer/homeBtn.png");
 	s->switchModeBtn = (struct btn*)malloc(sizeof(struct btn));
 	btnInit(s->switchModeBtn, 1218, 47, 110, 110, "asset/selectLevelScene/timer/switchModeBtn.png");
+
+	for (int i = 0; i < LEVEL_BLOCK_NUM; i++) {
+		s->levelBlockBtn[i] = (struct btn*)malloc(sizeof(struct btn));
+		switch (i) {
+		case 0:btnInit(s->levelBlockBtn[i], 278, 246, 599, 361, "asset/selectLevelScene/timer/levelBlock1.png"); break;
+		case 1:btnInit(s->levelBlockBtn[i], 1013, 246, 599, 361, "asset/selectLevelScene/timer/levelBlock2.png"); break;
+		case 2:btnInit(s->levelBlockBtn[i], 278, 650, 599, 361, "asset/selectLevelScene/timer/levelBlock3.png"); break;
+		case 3:btnInit(s->levelBlockBtn[i], 1013, 650, 599, 361, "asset/selectLevelScene/timer/levelBlock4.png"); break;
+		}
+	}
 }
 
 void selectLevelTimerDestroy(struct selectLevelTimer* s)
@@ -63,4 +87,8 @@ void selectLevelTimerDestroy(struct selectLevelTimer* s)
 	free(s->homeBtn);
 	btnDestroy(s->switchModeBtn);
 	free(s->switchModeBtn);
+	for (int i = 0; i < LEVEL_BLOCK_NUM; i++) {
+		btnDestroy(s->levelBlockBtn[i]);
+		free(s->levelBlockBtn[i]);
+	}
 }

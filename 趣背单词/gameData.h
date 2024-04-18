@@ -4,6 +4,12 @@
 //包含的存储库
 #include"characterDatabase.h"
 
+struct countdown {
+	int hh;
+	int mm;
+	int ss;
+};
+
 struct gameData {
 	void (*load)(struct gameData*);
 	void (*save)(struct gameData*);
@@ -35,6 +41,8 @@ struct gameData {
 
 	bool isDeveloperMode;
 
+	bool isbkMusic;
+
 	int mode;
 	/* 1-经典模式
 	   2-限时模式
@@ -42,6 +50,8 @@ struct gameData {
 	*/
 	int lastMode;
 	bool isSwitchMode;
+
+	struct countdown countdown;//限时模式的倒计时时间
 };
 
 void gameDataInit(struct gameData*gd);

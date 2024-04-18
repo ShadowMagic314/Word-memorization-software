@@ -88,4 +88,5 @@ void selectLevelSceneDestroy(struct selectLevelScene* s, struct gameData* gd)
 	case 2:selectLevelTimerDestroy((struct selectLevelTimer*)s->modeScene); break;
 	case 3:selectLevelEndlessDestroy((struct selectLevelEndless*)s->modeScene); break;
 	}
+	free(s->modeScene);
 }

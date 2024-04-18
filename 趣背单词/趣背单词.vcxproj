@@ -19,14 +19,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bkMusic.h" />
     <ClInclude Include="btn.h" />
     <ClInclude Include="characterDatabase.h" />
     <ClInclude Include="gachaScene.h" />
     <ClInclude Include="gameData.h" />
     <ClInclude Include="gameloop.h" />
     <ClInclude Include="image.h" />
+    <ClInclude Include="levelEndless.h" />
     <ClInclude Include="levelFinishScene.h" />
     <ClInclude Include="levelScene.h" />
+    <ClInclude Include="levelClassics.h" />
+    <ClInclude Include="levelTimer.h" />
     <ClInclude Include="menuScene.h" />
     <ClInclude Include="pinBall.h" />
     <ClInclude Include="scene.h" />
@@ -39,14 +43,18 @@
     <ClInclude Include="video.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="bkMusic.cpp" />
     <ClCompile Include="btn.cpp" />
     <ClCompile Include="characterDatabase.cpp" />
     <ClCompile Include="gachaScene.cpp" />
     <ClCompile Include="gameData.cpp" />
     <ClCompile Include="gameloop.cpp" />
     <ClCompile Include="image.cpp" />
+    <ClCompile Include="levelEndless.cpp" />
     <ClCompile Include="levelFinishScene.cpp" />
     <ClCompile Include="levelScene.cpp" />
+    <ClCompile Include="levelClassics.cpp" />
+    <ClCompile Include="levelTimer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menuScene.cpp" />
     <ClCompile Include="pinBall.cpp" />

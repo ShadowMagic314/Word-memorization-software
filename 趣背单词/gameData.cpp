@@ -114,11 +114,17 @@ void gameDataInit(struct gameData* gd)
 
 	gd->isDeveloperMode = false;
 
+	gd->isbkMusic = false;
+
 	gd->mode = 1;//开始是经典模式
 	gd->lastMode = 1;
 
 	gd->lastMode = -1;
 	gd->isSwitchMode = false;
+
+	gd->countdown.hh = 0;
+	gd->countdown.mm = 0;
+	gd->countdown.ss = 0;
 }
 
 void gameDataDestroy(struct gameData* gd)
