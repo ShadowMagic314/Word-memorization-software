@@ -15,22 +15,33 @@ struct selectLevelClassics {
 
 	IMAGE* bk;
 	IMAGE* levelBlock;
+	IMAGE* bigLevelBlock;
 	IMAGE* titleImg;
 	IMAGE* voidstar;
 	IMAGE* fullstar;
 
 	RECT* rectLevels;//每一个关卡块
+	RECT* bigRectLevels;
 
 	int selectedLevel;//按实际来，1开始
 	int pageNum;//现在是第几页，1开始
 	int selectErrorCnt;
 
 	bool isQuit;
+	bool isHomeBtnHover;
+	bool isPgupBtnHover;
+	bool isPgdnBtnHover;
+	bool isSwitchModeBtnHover;
+	bool isRectLevelsHover[LEVEL_NUM_EVERY_PAGE];
 
 	btn* homeBtn;
+	btn* bigHomeBtn;
 	btn* pgupBtn;
+	btn* bigPgupBtn;
 	btn* pgdnBtn;
+	btn* bigPgdnBtn;
 	btn* switchModeBtn;
+	btn* bigSwitchModeBtn;
 
 	bool isSelectError;//越级选择
 };

@@ -21,7 +21,7 @@ struct menuScene {
 	IMAGE* bigStartBtn;
 	IMAGE* bigGachaBtn;
 	IMAGE* bigExitBtn;
-	
+
 	btn* startBtn;
 	btn* gachaBtn;
 	btn* exitBtn;
@@ -32,6 +32,7 @@ struct menuScene {
 	bool isExitBtnHover;
 	bool isLongPress;
 	bool isLongPressTrigger;
+	bool isPinBallHover;
 
 	int animationPlayCnt;
 	int longPressTriggerCnt;

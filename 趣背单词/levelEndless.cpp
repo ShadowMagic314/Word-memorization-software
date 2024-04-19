@@ -43,12 +43,53 @@ void levelEndlessDraw(struct levelEndless* s, struct gameData* gd)
 {
 	putimage(0, 0, s->bk);
 
-	s->backBtn->super.draw((sprite*)s->backBtn);
-	s->optionABtn->super.draw((sprite*)s->optionABtn);
-	s->optionBBtn->super.draw((sprite*)s->optionBBtn);
-	s->optionCBtn->super.draw((sprite*)s->optionCBtn);
-	s->optionDBtn->super.draw((sprite*)s->optionDBtn);
-	s->pronunciationBtn->super.draw((sprite*)s->pronunciationBtn);
+	if (s->isBackBtnHover == false) {
+		s->backBtn->super.draw((sprite*)s->backBtn);
+	}
+	else
+	{
+		s->bigBackBtn->super.draw((sprite*)s->bigBackBtn);
+	}
+
+	if (s->isBigOptionABtnHover == false) {
+		s->optionABtn->super.draw((sprite*)s->optionABtn);
+	}
+	else
+	{
+		s->bigOptionABtn->super.draw((sprite*)s->bigOptionABtn);
+	}
+
+	if (s->isBigOptionBBtnHover == false) {
+		s->optionBBtn->super.draw((sprite*)s->optionBBtn);
+	}
+	else
+	{
+		s->bigOptionBBtn->super.draw((sprite*)s->bigOptionBBtn);
+	}
+
+	if (s->isBigOptionCBtnHover == false) {
+		s->optionCBtn->super.draw((sprite*)s->optionCBtn);
+	}
+	else
+	{
+		s->bigOptionCBtn->super.draw((sprite*)s->bigOptionCBtn);
+	}
+
+	if (s->isBigOptionDBtnHover == false) {
+		s->optionDBtn->super.draw((sprite*)s->optionDBtn);
+	}
+	else
+	{
+		s->bigOptionDBtn->super.draw((sprite*)s->bigOptionDBtn);
+	}
+
+	if (s->isBigPronunciationBtnHover == false) {
+		s->pronunciationBtn->super.draw((sprite*)s->pronunciationBtn);
+	}
+	else
+	{
+		s->bigPronunciationBtn->super.draw((sprite*)s->bigPronunciationBtn);
+	}
 
 	putTransparentImage(NULL, 1220, 12, s->bkCountdown);
 
@@ -137,7 +178,13 @@ void levelEndlessDraw(struct levelEndless* s, struct gameData* gd)
 
 	//绘制"下一关"按钮
 	if (s->isSelectFinish == true) {
-		s->nextBtn->super.draw((sprite*)s->nextBtn);
+		if (s->isNextBtnHover == false) {
+			s->nextBtn->super.draw((sprite*)s->nextBtn);
+		}
+		else
+		{
+			s->bigNextBtn->super.draw((sprite*)s->bigNextBtn);
+		}
 	}
 
 	settextcolor(BLUE);
@@ -152,7 +199,7 @@ void levelEndlessDraw(struct levelEndless* s, struct gameData* gd)
 	setbkmode(TRANSPARENT);
 	char strMark[30];
 	sprintf(strMark, "得分:%d", s->mark);
-	outtextxy(140, 0, strMark);
+	outtextxy(180, 20, strMark);
 
 	if (s->isFinish) {
 		cleardevice();
@@ -349,6 +396,7 @@ void levelEndlessControl(struct levelEndless* s, ExMessage* msg, struct gameData
 		{
 			s->isQuit = true;
 			gd->isSelectLevelScene = true;
+			s->isFinish = true;
 		}
 		if (BTN_RANGE(s->nextBtn))
 		{
@@ -361,6 +409,38 @@ void levelEndlessControl(struct levelEndless* s, ExMessage* msg, struct gameData
 		if (BTN_RANGE(s->pronunciationBtn))
 		{
 			s->isPronounce = true;
+		}
+	}
+
+	if (msg->message == WM_MOUSEMOVE) {
+		s->isBackBtnHover = false;
+		s->isBigOptionABtnHover = false;
+		s->isBigOptionBBtnHover = false;
+		s->isBigOptionCBtnHover = false;
+		s->isBigOptionDBtnHover = false;
+		s->isBigPronunciationBtnHover = false;
+		s->isNextBtnHover = false;
+
+		if (BTN_RANGE(s->nextBtn)) {
+			s->isNextBtnHover = true;
+		}
+		if (BTN_RANGE(s->optionABtn)) {
+			s->isBigOptionABtnHover = true;
+		}
+		if (BTN_RANGE(s->optionBBtn)) {
+			s->isBigOptionBBtnHover = true;
+		}
+		if (BTN_RANGE(s->optionCBtn)) {
+			s->isBigOptionCBtnHover = true;
+		}
+		if (BTN_RANGE(s->optionDBtn)) {
+			s->isBigOptionDBtnHover = true;
+		}
+		if (BTN_RANGE(s->pronunciationBtn)) {
+			s->isBigPronunciationBtnHover = true;
+		}
+		if (BTN_RANGE(s->bigBackBtn)) {
+			s->isBackBtnHover = true;
 		}
 	}
 }
@@ -387,19 +467,33 @@ void levelEndlessInit(struct levelEndless* s, struct gameData* gd)
 	loadimage(s->bkCountdown, "asset/levelScene/endless/bkCountdown.png");
 
 	s->backBtn = (struct btn*)malloc(sizeof(struct btn));
-	btnInit(s->backBtn, 0, 0, 128, 129, "asset/levelScene/endless/backBtn.png");
+	btnInit(s->backBtn, 28, 23, 128, 129, "asset/levelScene/endless/backBtn.png");
+	s->bigBackBtn = (struct btn*)malloc(sizeof(struct btn));
+	btnInit(s->bigBackBtn, 23, 17, 139, 141, "asset/levelScene/endless/bigBackBtn.png");
 	s->optionABtn = (struct btn*)malloc(sizeof(struct btn));
 	btnInit(s->optionABtn, 253, 351, 655, 233, "asset/levelScene/endless/optionBtn.png");
+	s->bigOptionABtn = (struct btn*)malloc(sizeof(struct btn));
+	btnInit(s->bigOptionABtn, 242, 343, 677, 249, "asset/levelScene/endless/bigOptionBtn.png");
 	s->optionBBtn = (struct btn*)malloc(sizeof(struct btn));
 	btnInit(s->optionBBtn, 1003, 351, 655, 233, "asset/levelScene/endless/optionBtn.png");
+	s->bigOptionBBtn = (struct btn*)malloc(sizeof(struct btn));
+	btnInit(s->bigOptionBBtn, 991, 343, 678, 249, "asset/levelScene/endless/bigOptionBtn.png");
 	s->optionCBtn = (struct btn*)malloc(sizeof(struct btn));
 	btnInit(s->optionCBtn, 253, 625, 655, 233, "asset/levelScene/endless/optionBtn.png");
+	s->bigOptionCBtn = (struct btn*)malloc(sizeof(struct btn));
+	btnInit(s->bigOptionCBtn, 245, 616, 673, 251, "asset/levelScene/endless/bigOptionBtn.png");
 	s->optionDBtn = (struct btn*)malloc(sizeof(struct btn));
 	btnInit(s->optionDBtn, 1003, 625, 655, 233, "asset/levelScene/endless/optionBtn.png");
+	s->bigOptionDBtn = (struct btn*)malloc(sizeof(struct btn));
+	btnInit(s->bigOptionDBtn, 992, 616, 677, 251, "asset/levelScene/endless/bigOptionBtn.png");
 	s->nextBtn = (struct btn*)malloc(sizeof(struct btn));
 	btnInit(s->nextBtn, 707, 878, 507, 151, "asset/levelScene/endless/nextBtn.png");
+	s->bigNextBtn = (struct btn*)malloc(sizeof(struct btn));
+	btnInit(s->bigNextBtn, 701, 873, 519, 162, "asset/levelScene/endless/bigNextBtn.png");
 	s->pronunciationBtn = (struct btn*)malloc(sizeof(struct btn));
 	btnInit(s->pronunciationBtn, 908, 253, 78, 78, "asset/levelScene/endless/pronunciation.png");
+	s->bigPronunciationBtn = (struct btn*)malloc(sizeof(struct btn));
+	btnInit(s->bigPronunciationBtn, 903, 248, 87, 87, "asset/levelScene/endless/bigPronunciation.png");
 
 	s->rectOptionA = { 280,361,881,574 };//+27,+10,+601,+213
 	s->rectOptionB = { 1030,361,1631,574 };
@@ -436,6 +530,14 @@ void levelEndlessInit(struct levelEndless* s, struct gameData* gd)
 	s->isSelectFinish = false;
 	s->isFinish = false;
 
+	s->isNextBtnHover = false;
+	s->isBigOptionABtnHover = false;
+	s->isBigOptionBBtnHover = false;
+	s->isBigOptionCBtnHover = false;
+	s->isBigOptionDBtnHover = false;
+	s->isBigPronunciationBtnHover = false;
+	s->isBackBtnHover = false;
+
 	for (int i = 0; i < 4; i++) {
 		s->soundFlag[i] = false;
 	}
@@ -459,18 +561,32 @@ void levelEndlessDestroy(struct levelEndless* s)
 
 	btnDestroy(s->backBtn);
 	free(s->backBtn);
+	btnDestroy(s->bigBackBtn);
+	free(s->bigBackBtn);
 	btnDestroy(s->optionABtn);
 	free(s->optionABtn);
+	btnDestroy(s->bigOptionABtn);
+	free(s->bigOptionABtn);
 	btnDestroy(s->optionBBtn);
 	free(s->optionBBtn);
+	btnDestroy(s->bigOptionBBtn);
+	free(s->bigOptionBBtn);
 	btnDestroy(s->optionCBtn);
 	free(s->optionCBtn);
+	btnDestroy(s->bigOptionCBtn);
+	free(s->bigOptionCBtn);
 	btnDestroy(s->optionDBtn);
 	free(s->optionDBtn);
+	btnDestroy(s->bigOptionDBtn);
+	free(s->bigOptionDBtn);
 	btnDestroy(s->nextBtn);
 	free(s->nextBtn);
+	btnDestroy(s->bigNextBtn);
+	free(s->bigNextBtn);
 	btnDestroy(s->pronunciationBtn);
 	free(s->pronunciationBtn);
+	btnDestroy(s->bigPronunciationBtn);
+	free(s->bigPronunciationBtn);
 
 	for (int i = 0; i < LEVEL_NUM; i++) {
 		free(s->wordListsFlag[i]);

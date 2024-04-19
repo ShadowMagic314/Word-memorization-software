@@ -1,6 +1,7 @@
 #pragma once
 
 #include"sprite.h"
+#include"menuScene.h"
 #include<easyx.h>
 
 struct pinBall {
@@ -13,11 +14,13 @@ struct pinBall {
 	int dy;
 
 	IMAGE* imgBall;
+	IMAGE* imgBigBall;
 
 	RECT rectBoundary;
 };
 
 void pinBallStateReset(struct pinBall* pb);
+void pinBallDraw(struct pinBall* pb, struct menuScene* ms);
 
 void pinBallInit(struct pinBall* pb, int r, RECT rectBoundary);
 void pinBallDestroy(struct pinBall* pb);

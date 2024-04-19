@@ -20,12 +20,19 @@ struct levelEndless {
 	IMAGE* bkCountdown;
 
 	btn* backBtn;
+	btn* bigBackBtn;
 	btn* optionABtn;
+	btn* bigOptionABtn;
 	btn* optionBBtn;
+	btn* bigOptionBBtn;
 	btn* optionCBtn;
+	btn* bigOptionCBtn;
 	btn* optionDBtn;
+	btn* bigOptionDBtn;
 	btn* nextBtn;
+	btn* bigNextBtn;
 	btn* pronunciationBtn;
+	btn* bigPronunciationBtn;
 
 	RECT rectOptionA, rectOptionB, rectOptionC, rectOptionD;
 	RECT rectQuestion;
@@ -36,6 +43,14 @@ struct levelEndless {
 	bool isNext;
 	bool isPronounce;
 	bool** wordListsFlag;//用于标记哪个单词出现过了//[2][10]==true表示第二关第10个单词出现过了//从1开始
+
+	bool isBackBtnHover;
+	bool isNextBtnHover;
+	bool isBigOptionABtnHover;
+	bool isBigOptionBBtnHover;
+	bool isBigOptionCBtnHover;
+	bool isBigOptionDBtnHover;
+	bool isBigPronunciationBtnHover;
 
 	int correctOption;//1-A 2-B 3-C 4-D
 

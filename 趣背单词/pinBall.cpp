@@ -1,9 +1,15 @@
 #include"pinBall.h"
 #include"image.h"
+#include"menuScene.h"
 
-void pinBallDraw(struct pinBall* pb)
+void pinBallDraw(struct pinBall* pb, struct menuScene* ms)
 {
-	putTransparentImage(NULL, pb->x - pb->r, pb->y - pb->r, pb->imgBall);
+	if (ms->isPinBallHover == false) {
+		putTransparentImage(NULL, pb->x - pb->r, pb->y - pb->r, pb->imgBall);
+	}
+	else {
+		putTransparentImage(NULL, pb->x - pb->r, pb->y - pb->r, pb->imgBigBall);
+	}
 }
 
 void pinBallUpdate(struct pinBall* pb)
@@ -53,7 +59,7 @@ void pinBallInit(struct pinBall* pb, int r, RECT rectBoundary)
 
 	pb->r = r;
 
-	pb->rectBoundary=rectBoundary;
+	pb->rectBoundary = rectBoundary;
 
 	int m, n;
 	m = rectBoundary.left + r;
@@ -62,14 +68,17 @@ void pinBallInit(struct pinBall* pb, int r, RECT rectBoundary)
 	m = rectBoundary.top + r;
 	n = rectBoundary.bottom - r;
 	pb->y = rand() % (n - m + 1) + m;
-	
+
 	pinBallStateReset(pb);
 
 	pb->imgBall = new IMAGE;
 	loadimage(pb->imgBall, "asset/menuScene/pinBall.png");
+	pb->imgBigBall = new IMAGE;
+	loadimage(pb->imgBigBall, "asset/menuScene/bigPinBall.png");
 }
 
 void pinBallDestroy(struct pinBall* pb)
 {
 	delete pb->imgBall;
+	delete pb->imgBigBall;
 }

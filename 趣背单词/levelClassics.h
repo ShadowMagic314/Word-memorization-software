@@ -22,12 +22,19 @@ struct levelClassics {
 	IMAGE* badend;
 
 	btn* backBtn;
+	btn* bigBackBtn;
 	btn* optionABtn;
+	btn* bigOptionABtn;
 	btn* optionBBtn;
+	btn* bigOptionBBtn;
 	btn* optionCBtn;
+	btn* bigOptionCBtn;
 	btn* optionDBtn;
+	btn* bigOptionDBtn;
 	btn* nextBtn;
+	btn* bigNextBtn;
 	btn* pronunciationBtn;
+	btn* bigPronunciationBtn;
 
 	RECT rectOptionA, rectOptionB, rectOptionC, rectOptionD;
 	RECT rectQuestion;
@@ -38,6 +45,14 @@ struct levelClassics {
 	bool isNext;
 	bool isSuccess;
 	bool isPronounce;
+
+	bool isBackBtnHover;
+	bool isNextBtnHover;
+	bool isBigOptionABtnHover;
+	bool isBigOptionBBtnHover;
+	bool isBigOptionCBtnHover;
+	bool isBigOptionDBtnHover;
+	bool isBigPronunciationBtnHover;
 
 	int correctOption;//1-A 2-B 3-C 4-D
 

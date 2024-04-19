@@ -102,6 +102,12 @@ void gameDataInit(struct gameData* gd)
 	if (gd->ownFiveStarCharacters == NULL) return;
 	gd->ownFourStarCharacters = (bool*)malloc(sizeof(bool) * gd->characterDB.fourStarCharacterNum);
 	if (gd->ownFourStarCharacters == NULL) return;
+	for (int i = 0; i < gd->characterDB.fiveStarCharacterNum; i++) {
+		gd->ownFiveStarCharacters[i] = false;
+	}
+	for (int i = 0; i < gd->characterDB.fourStarCharacterNum; i++) {
+		gd->ownFourStarCharacters[i] = false;
+	}
 
 	gd->level = -1;
 	gd->isExit = false;

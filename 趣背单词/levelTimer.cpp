@@ -4,12 +4,52 @@ void levelTimerDraw(struct levelTimer* s, struct gameData* gd)
 {
 	putimage(0, 0, s->bk);
 
-	s->backBtn->super.draw((sprite*)s->backBtn);
-	s->optionABtn->super.draw((sprite*)s->optionABtn);
-	s->optionBBtn->super.draw((sprite*)s->optionBBtn);
-	s->optionCBtn->super.draw((sprite*)s->optionCBtn);
-	s->optionDBtn->super.draw((sprite*)s->optionDBtn);
-	s->pronunciationBtn->super.draw((sprite*)s->pronunciationBtn);
+	if (s->isBackBtnHover == false) {
+		s->backBtn->super.draw((sprite*)s->backBtn);
+	}
+	else
+	{
+		s->bigBackBtn->super.draw((sprite*)s->bigBackBtn);
+	}
+	if (s->isBigOptionABtnHover == false) {
+		s->optionABtn->super.draw((sprite*)s->optionABtn);
+	}
+	else
+	{
+		s->bigOptionABtn->super.draw((sprite*)s->bigOptionABtn);
+	}
+
+	if (s->isBigOptionBBtnHover == false) {
+		s->optionBBtn->super.draw((sprite*)s->optionBBtn);
+	}
+	else
+	{
+		s->bigOptionBBtn->super.draw((sprite*)s->bigOptionBBtn);
+	}
+
+	if (s->isBigOptionCBtnHover == false) {
+		s->optionCBtn->super.draw((sprite*)s->optionCBtn);
+	}
+	else
+	{
+		s->bigOptionCBtn->super.draw((sprite*)s->bigOptionCBtn);
+	}
+
+	if (s->isBigOptionDBtnHover == false) {
+		s->optionDBtn->super.draw((sprite*)s->optionDBtn);
+	}
+	else
+	{
+		s->bigOptionDBtn->super.draw((sprite*)s->bigOptionDBtn);
+	}
+
+	if (s->isBigPronunciationBtnHover == false) {
+		s->pronunciationBtn->super.draw((sprite*)s->pronunciationBtn);
+	}
+	else
+	{
+		s->bigPronunciationBtn->super.draw((sprite*)s->bigPronunciationBtn);
+	}
 
 	putTransparentImage(NULL, 1220, 12, s->bkCountdown);
 
@@ -90,6 +130,9 @@ void levelTimerDraw(struct levelTimer* s, struct gameData* gd)
 	//绘制"下一关"按钮
 	if (s->isSelectFinish == true) {
 		s->nextBtn->super.draw((sprite*)s->nextBtn);
+		if (s->isNextBtnHover == true) {
+			s->bigNextBtn->super.draw((sprite*)s->bigNextBtn);
+		}
 	}
 
 	settextcolor(BLUE);
@@ -104,7 +147,7 @@ void levelTimerDraw(struct levelTimer* s, struct gameData* gd)
 	setbkmode(TRANSPARENT);
 	char strMark[30];
 	sprintf(strMark, "得分:%d", s->mark);
-	outtextxy(140, 0, strMark);
+	outtextxy(180, 20, strMark);
 
 	if (s->isFinish) {
 		cleardevice();
@@ -315,6 +358,38 @@ void levelTimerControl(struct levelTimer* s, ExMessage* msg, struct gameData* gd
 			s->isPronounce = true;
 		}
 	}
+
+	if (msg->message == WM_MOUSEMOVE) {
+		s->isBackBtnHover = false;
+		s->isBigOptionABtnHover = false;
+		s->isBigOptionBBtnHover = false;
+		s->isBigOptionCBtnHover = false;
+		s->isBigOptionDBtnHover = false;
+		s->isBigPronunciationBtnHover = false;
+		s->isNextBtnHover = false;
+
+		if (BTN_RANGE(s->nextBtn)) {
+			s->isNextBtnHover = true;
+		}
+		if (BTN_RANGE(s->optionABtn)) {
+			s->isBigOptionABtnHover = true;
+		}
+		if (BTN_RANGE(s->optionBBtn)) {
+			s->isBigOptionBBtnHover = true;
+		}
+		if (BTN_RANGE(s->optionCBtn)) {
+			s->isBigOptionCBtnHover = true;
+		}
+		if (BTN_RANGE(s->optionDBtn)) {
+			s->isBigOptionDBtnHover = true;
+		}
+		if (BTN_RANGE(s->pronunciationBtn)) {
+			s->isBigPronunciationBtnHover = true;
+		}
+		if (BTN_RANGE(s->bigBackBtn)) {
+			s->isBackBtnHover = true;
+		}
+	}
 }
 
 bool levelTimerIsQuit(struct levelTimer* s, struct gameData* gd)
@@ -339,19 +414,33 @@ void levelTimerInit(struct levelTimer* s, struct gameData* gd)
 	loadimage(s->bkCountdown, "asset/levelScene/timer/bkCountdown.png");
 
 	s->backBtn = (struct btn*)malloc(sizeof(struct btn));
-	btnInit(s->backBtn, 0, 0, 128, 129, "asset/levelScene/timer/backBtn.png");
+	btnInit(s->backBtn, 28, 23, 128, 129, "asset/levelScene/timer/backBtn.png");
+	s->bigBackBtn = (struct btn*)malloc(sizeof(struct btn));
+	btnInit(s->bigBackBtn, 23, 17, 139, 141, "asset/levelScene/timer/bigBackBtn.png");
 	s->optionABtn = (struct btn*)malloc(sizeof(struct btn));
 	btnInit(s->optionABtn, 253, 351, 655, 233, "asset/levelScene/timer/optionBtn.png");
+	s->bigOptionABtn = (struct btn*)malloc(sizeof(struct btn));
+	btnInit(s->bigOptionABtn, 242, 343, 677, 249, "asset/levelScene/timer/bigOptionBtn.png");
 	s->optionBBtn = (struct btn*)malloc(sizeof(struct btn));
 	btnInit(s->optionBBtn, 1003, 351, 655, 233, "asset/levelScene/timer/optionBtn.png");
+	s->bigOptionBBtn = (struct btn*)malloc(sizeof(struct btn));
+	btnInit(s->bigOptionBBtn, 991, 343, 678, 249, "asset/levelScene/timer/bigOptionBtn.png");
 	s->optionCBtn = (struct btn*)malloc(sizeof(struct btn));
 	btnInit(s->optionCBtn, 253, 625, 655, 233, "asset/levelScene/timer/optionBtn.png");
+	s->bigOptionCBtn = (struct btn*)malloc(sizeof(struct btn));
+	btnInit(s->bigOptionCBtn, 245, 616, 673, 251, "asset/levelScene/timer/bigOptionBtn.png");
 	s->optionDBtn = (struct btn*)malloc(sizeof(struct btn));
 	btnInit(s->optionDBtn, 1003, 625, 655, 233, "asset/levelScene/timer/optionBtn.png");
+	s->bigOptionDBtn = (struct btn*)malloc(sizeof(struct btn));
+	btnInit(s->bigOptionDBtn, 992, 616, 677, 251, "asset/levelScene/timer/bigOptionBtn.png");
 	s->nextBtn = (struct btn*)malloc(sizeof(struct btn));
 	btnInit(s->nextBtn, 707, 878, 507, 151, "asset/levelScene/timer/nextBtn.png");
+	s->bigNextBtn = (struct btn*)malloc(sizeof(struct btn));
+	btnInit(s->bigNextBtn, 701, 873, 519, 162, "asset/levelScene/timer/bigNextBtn.png");
 	s->pronunciationBtn = (struct btn*)malloc(sizeof(struct btn));
 	btnInit(s->pronunciationBtn, 908, 253, 78, 78, "asset/levelScene/timer/pronunciation.png");
+	s->bigPronunciationBtn = (struct btn*)malloc(sizeof(struct btn));
+	btnInit(s->bigPronunciationBtn, 903, 248, 87, 87, "asset/levelScene/timer/bigPronunciation.png");
 
 	s->rectOptionA = { 280,361,881,574 };//+27,+10,+601,+213
 	s->rectOptionB = { 1030,361,1631,574 };
@@ -364,6 +453,15 @@ void levelTimerInit(struct levelTimer* s, struct gameData* gd)
 	}
 	s->isQuit = false;
 	s->isNext = true;
+
+	s->isNextBtnHover = false;
+	s->isBigOptionABtnHover = false;
+	s->isBigOptionBBtnHover = false;
+	s->isBigOptionCBtnHover = false;
+	s->isBigOptionDBtnHover = false;
+	s->isBigPronunciationBtnHover = false;
+	s->isBackBtnHover = false;
+
 	s->wordListsFlag = (bool**)malloc((LEVEL_NUM + 1) * sizeof(bool*));
 	if (s->wordListsFlag == NULL) return;
 	for (int i = 0; i < LEVEL_NUM + 1; i++) {
@@ -410,18 +508,32 @@ void levelTimerDestroy(struct levelTimer* s)
 
 	btnDestroy(s->backBtn);
 	free(s->backBtn);
+	btnDestroy(s->bigBackBtn);
+	free(s->bigBackBtn);
 	btnDestroy(s->optionABtn);
 	free(s->optionABtn);
+	btnDestroy(s->bigOptionABtn);
+	free(s->bigOptionABtn);
 	btnDestroy(s->optionBBtn);
 	free(s->optionBBtn);
+	btnDestroy(s->bigOptionBBtn);
+	free(s->bigOptionBBtn);
 	btnDestroy(s->optionCBtn);
 	free(s->optionCBtn);
+	btnDestroy(s->bigOptionCBtn);
+	free(s->bigOptionCBtn);
 	btnDestroy(s->optionDBtn);
 	free(s->optionDBtn);
+	btnDestroy(s->bigOptionDBtn);
+	free(s->bigOptionDBtn);
 	btnDestroy(s->nextBtn);
 	free(s->nextBtn);
+	btnDestroy(s->bigNextBtn);
+	free(s->bigNextBtn);
 	btnDestroy(s->pronunciationBtn);
 	free(s->pronunciationBtn);
+	btnDestroy(s->bigPronunciationBtn);
+	free(s->bigPronunciationBtn);
 
 	for (int i = 0; i < LEVEL_NUM; i++) {
 		free(s->wordListsFlag[i]);

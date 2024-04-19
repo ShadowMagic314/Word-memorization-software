@@ -20,8 +20,7 @@ void menuSceneDraw(struct menuScene* s, struct gameData* gd)
 			putTransparentImage(NULL, 614, 785, s->bigExitBtn);
 		}
 	}
-
-	s->pinBall->super.draw((sprite*)s->pinBall);
+	pinBallDraw(s->pinBall, s);
 
 	if (gd->isDeveloperMode == true) {
 		settextcolor(BLACK);
@@ -34,14 +33,14 @@ void menuSceneDraw(struct menuScene* s, struct gameData* gd)
 void menuSceneUpdate(struct menuScene* s, struct gameData* gd)
 {
 	s->animationPlayCnt++;
-	if (s->animationPlayCnt >= ANIMATIONIMAGENUM ) {
+	if (s->animationPlayCnt >= ANIMATIONIMAGENUM) {
 		s->animationPlayCnt = 0;
 	}
 
 	if (s->isLongPress == true) {
 		s->pinBall->x = s->mouseX;
 		s->pinBall->y = s->mouseY;
-		
+
 		switch (s->developerModeCnt) {//拖着球从第四象限开始，顺时针走一圈，逆时针走一圈
 		case 0:if (RECT_RANGE(s->fourthQuadrant)) s->developerModeCnt++; else s->developerModeCnt = 0; break;
 		case 1:if (RECT_RANGE(s->firstQuadrant)) s->developerModeCnt++; else if (RECT_RANGE(s->fourthQuadrant)) {}
@@ -81,7 +80,7 @@ void menuSceneUpdate(struct menuScene* s, struct gameData* gd)
 		s->pinBall->super.update((sprite*)s->pinBall);
 	}
 
-	if (s->isLongPressTrigger==true) {
+	if (s->isLongPressTrigger == true) {
 		s->longPressTriggerCnt++;
 		if (s->longPressTriggerCnt >= 2) {
 			s->isLongPressTrigger = false;
@@ -100,17 +99,21 @@ void menuSceneControl(struct menuScene* s, ExMessage* msg, struct gameData* gd)
 		s->isStartBtnHover = false;
 		s->isGachaBtnHover = false;
 		s->isExitBtnHover = false;
-		if (s->startBtn->super.x < msg->x && msg->x < s->startBtn->super.x + s->startBtn->super.width && s->startBtn->super.y < msg->y && msg->y < s->startBtn->super.y + s->startBtn->super.height)
+		s->isPinBallHover = false;
+		if (BTN_RANGE(s->startBtn))
 		{
 			s->isStartBtnHover = true;
 		}
-		if (s->gachaBtn->super.x < msg->x && msg->x < s->gachaBtn->super.x + s->gachaBtn->super.width && s->gachaBtn->super.y < msg->y && msg->y < s->gachaBtn->super.y + s->gachaBtn->super.height)
+		if (BTN_RANGE(s->gachaBtn))
 		{
 			s->isGachaBtnHover = true;
 		}
-		if (s->exitBtn->super.x < msg->x && msg->x < s->exitBtn->super.x + s->exitBtn->super.width && s->exitBtn->super.y < msg->y && msg->y < s->exitBtn->super.y + s->exitBtn->super.height)
+		if (BTN_RANGE(s->exitBtn))
 		{
 			s->isExitBtnHover = true;
+		}
+		if (pow((msg->x - s->pinBall->x), 2) + pow((msg->y - s->pinBall->y), 2) <= pow(s->pinBall->r, 2)) {
+			s->isPinBallHover = true;
 		}
 
 		s->mouseX = msg->x;
@@ -132,7 +135,7 @@ void menuSceneControl(struct menuScene* s, ExMessage* msg, struct gameData* gd)
 				s->isQuit = true;
 				gd->isExit = true;
 			}
-			
+
 			if (pow((msg->x - s->pinBall->x), 2) + pow((msg->y - s->pinBall->y), 2) <= pow(s->pinBall->r, 2)) {
 				s->isLongPressTrigger = true;
 			}
@@ -143,6 +146,7 @@ void menuSceneControl(struct menuScene* s, ExMessage* msg, struct gameData* gd)
 	{
 		s->isLongPressTrigger = false;
 		s->isLongPress = false;
+		s->isPinBallHover = false;
 		pinBallStateReset(s->pinBall);//这个函数写这里不合适，应该写到update里，但是很麻烦
 	}
 }
@@ -161,7 +165,7 @@ void menuSceneInit(struct menuScene* s)
 
 	RECT rectScreen = { 0,0,1920,858 };
 	s->pinBall = (struct pinBall*)malloc(sizeof(struct pinBall));
-	pinBallInit(s->pinBall,70, rectScreen);
+	pinBallInit(s->pinBall, 70, rectScreen);
 
 	s->bk = new IMAGE;
 	loadimage(s->bk, "asset/menuScene/bk.png");
@@ -193,6 +197,7 @@ void menuSceneInit(struct menuScene* s)
 	s->isExitBtnHover = false;
 	s->isLongPress = false;
 	s->isLongPressTrigger = false;
+	s->isPinBallHover = false;
 
 	s->animationPlayCnt = 0;
 	s->longPressTriggerCnt = 0;

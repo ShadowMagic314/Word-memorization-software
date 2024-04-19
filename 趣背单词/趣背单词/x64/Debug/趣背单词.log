@@ -1,2 +1,35 @@
-﻿  levelEndless.cpp
+﻿  bkMusic.cpp
+  btn.cpp
+  characterDatabase.cpp
+  gachaScene.cpp
+  gameData.cpp
+  gameloop.cpp
+  image.cpp
+  levelClassics.cpp
+  levelEndless.cpp
+  levelFinishScene.cpp
+  levelScene.cpp
+  levelTimer.cpp
+  main.cpp
+  menuScene.cpp
+D:\software\vs2022\public-project\Word-memorization-software\趣背单词\selectLevelEndless.h(10,1): warning C4005: “LEVEL_BLOCK_NUM”: 宏重定义
+  (编译源文件“main.cpp”)
+  D:\software\vs2022\public-project\Word-memorization-software\趣背单词\selectLevelTimer.h(10,1):
+  参见“LEVEL_BLOCK_NUM”的前一个定义
+  
+  pinBall.cpp
+  seleceLevelScene.cpp
+D:\software\vs2022\public-project\Word-memorization-software\趣背单词\selectLevelEndless.h(10,1): warning C4005: “LEVEL_BLOCK_NUM”: 宏重定义
+  (编译源文件“seleceLevelScene.cpp”)
+  D:\software\vs2022\public-project\Word-memorization-software\趣背单词\selectLevelTimer.h(10,1):
+  参见“LEVEL_BLOCK_NUM”的前一个定义
+  
+  selectLevelClassics.cpp
+  selectLevelEndless.cpp
+  selectLevelTimer.cpp
+  vector.cpp
+  正在生成代码...
+  正在编译...
+  video.cpp
+  正在生成代码...
   趣背单词.vcxproj -> D:\software\vs2022\public-project\Word-memorization-software\趣背单词\x64\Debug\趣背单词.exe
