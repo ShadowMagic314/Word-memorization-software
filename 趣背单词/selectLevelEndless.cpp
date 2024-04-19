@@ -33,9 +33,9 @@ void selectLevelEndlessControl(struct selectLevelEndless* s, ExMessage* msg, str
 			if (BTN_RANGE(s->levelBlockBtn[i])) {
 				//后面加别的//目前仅供测试
 				switch (i) {
-				//case 0:s->isQuit = true; gd->isLevelScane = true; break;
-				//case 1:s->isQuit = true; gd->isLevelScane = true; break;
-				//case 2:s->isQuit = true; gd->isLevelScane = true; break;
+				case 0:s->isQuit = true; gd->isLevelScane = true; gd->difficultyGrade = 1; break;
+				case 1:s->isQuit = true; gd->isLevelScane = true; gd->difficultyGrade = 2; break;
+				case 2:s->isQuit = true; gd->isLevelScane = true; gd->difficultyGrade = 3; break;
 				}
 			}
 		}

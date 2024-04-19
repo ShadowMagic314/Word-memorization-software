@@ -1,8 +1,8 @@
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS
 #define QUESTION_NUM_EVERY_LEVEL 20
-#define FIRST_PASS_REWARDS 10//首次通关奖励粉球数
-#define REPEAT_PASS_REWARDS 2//重复通关奖励粉球数
+#define FIRST_PASS_REWARDS 3//首次通关奖励粉球数
+#define REPEAT_PASS_REWARDS 1//重复通关奖励粉球数
 
 #include <stdlib.h>
 #include"scene.h"

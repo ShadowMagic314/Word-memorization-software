@@ -17,6 +17,7 @@ struct levelTimer {
 	IMAGE* bk;
 	IMAGE* imgBingo;
 	IMAGE* imgError;
+	IMAGE* bkCountdown;
 
 	btn* backBtn;
 	btn* optionABtn;
@@ -56,7 +57,7 @@ struct levelTimer {
 
 	clock_t timingStart;
 	clock_t timingNow;
-	struct countdown countdown;
+	struct countdown* countdown;
 	bool isCountdownUpdate;
 };
 

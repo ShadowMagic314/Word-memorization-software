@@ -46,7 +46,7 @@ void levelSceneInit(struct levelScene* s, struct gameData* gd)
 		endless = (struct levelEndless*)malloc(sizeof(struct levelEndless));
 		if (endless == NULL) return;
 		s->modeScene = (struct scene*)endless;
-		levelEndlessInit((struct levelEndless*)s->modeScene);
+		levelEndlessInit((struct levelEndless*)s->modeScene, gd);
 		break;
 	}
 }

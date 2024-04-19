@@ -33,9 +33,9 @@ void selectLevelTimerControl(struct selectLevelTimer* s, ExMessage* msg, struct 
 			if (BTN_RANGE(s->levelBlockBtn[i])) {
 				//后面加别的//目前仅供测试
 				switch (i) {
-				case 0:s->isQuit = true; gd->isLevelScane = true; gd->countdown = { 0,1,0 }; break;
-				case 1:s->isQuit = true; gd->isLevelScane = true; gd->countdown = { 0,5,0 }; break;
-				case 2:s->isQuit = true; gd->isLevelScane = true; gd->countdown = { 0,15,0 }; break;
+				case 0:s->isQuit = true; gd->isLevelScane = true; *gd->countdown = { 0,1,0 }; break;
+				case 1:s->isQuit = true; gd->isLevelScane = true; *gd->countdown = { 0,5,0 }; break;
+				case 2:s->isQuit = true; gd->isLevelScane = true; *gd->countdown = { 0,15,0 }; break;
 				//case 3:s->isQuit = true; gd->isLevelScane = true; break;//自定义后面加
 				}
 			}

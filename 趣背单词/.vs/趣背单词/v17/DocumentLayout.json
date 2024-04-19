@@ -5,10 +5,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{73EAAEC9-0583-4F3B-BC0B-4F1A5CCD62B9}|\u8DA3\u80CC\u5355\u8BCD.vcxproj|D:\\software\\vs2022\\public-project\\Word-memorization-software\\\u8DA3\u80CC\u5355\u8BCD\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{73EAAEC9-0583-4F3B-BC0B-4F1A5CCD62B9}|\u8DA3\u80CC\u5355\u8BCD.vcxproj|solutionrelative:main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{73EAAEC9-0583-4F3B-BC0B-4F1A5CCD62B9}|\u8DA3\u80CC\u5355\u8BCD.vcxproj|D:\\software\\vs2022\\public-project\\Word-memorization-software\\\u8DA3\u80CC\u5355\u8BCD\\selectLevelEndless.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{73EAAEC9-0583-4F3B-BC0B-4F1A5CCD62B9}|\u8DA3\u80CC\u5355\u8BCD.vcxproj|solutionrelative:selectLevelEndless.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,8 +14,12 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e506b91c-c606-466a-90a9-123d1d1e12b3}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -28,28 +28,10 @@
               "RelativeDocumentMoniker": "main.cpp",
               "ToolTip": "D:\\software\\vs2022\\public-project\\Word-memorization-software\\\u8DA3\u80CC\u5355\u8BCD\\main.cpp",
               "RelativeToolTip": "main.cpp",
-              "ViewState": "AQIAAEEAAAAAAAAAAAAnwDEAAAAhAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvxEAAAAXAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-04-06T06:59:33.478Z",
-              "IsPinned": true,
+              "WhenOpened": "2024-04-19T10:47:55.739Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "selectLevelEndless.cpp",
-              "DocumentMoniker": "D:\\software\\vs2022\\public-project\\Word-memorization-software\\\u8DA3\u80CC\u5355\u8BCD\\selectLevelEndless.cpp",
-              "RelativeDocumentMoniker": "selectLevelEndless.cpp",
-              "ToolTip": "D:\\software\\vs2022\\public-project\\Word-memorization-software\\\u8DA3\u80CC\u5355\u8BCD\\selectLevelEndless.cpp",
-              "RelativeToolTip": "selectLevelEndless.cpp",
-              "ViewState": "AQIAABcAAAAAAAAAAAAmwCYAAAAEAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-04-18T14:42:16.428Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{e506b91c-c606-466a-90a9-123d1d1e12b3}"
             }
           ]
         }

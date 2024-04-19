@@ -11,6 +11,8 @@ void levelTimerDraw(struct levelTimer* s, struct gameData* gd)
 	s->optionDBtn->super.draw((sprite*)s->optionDBtn);
 	s->pronunciationBtn->super.draw((sprite*)s->pronunciationBtn);
 
+	putTransparentImage(NULL, 1220, 12, s->bkCountdown);
+
 	settextcolor(BLACK);
 	settextstyle(140, 0, "Î¢ÈíÑÅºÚ");
 	setbkmode(TRANSPARENT);
@@ -94,7 +96,7 @@ void levelTimerDraw(struct levelTimer* s, struct gameData* gd)
 	settextstyle(150, 0, "Î¢ÈíÑÅºÚ");
 	setbkmode(TRANSPARENT);
 	char strCountdown[30];
-	sprintf(strCountdown, "%02d:%02d:%02d", s->countdown.hh, s->countdown.mm, s->countdown.ss);
+	sprintf(strCountdown, "%02d:%02d:%02d", s->countdown->hh, s->countdown->mm, s->countdown->ss);
 	outtextxy(1400, 20, strCountdown);
 
 	settextcolor(WHITE);
@@ -111,7 +113,16 @@ void levelTimerDraw(struct levelTimer* s, struct gameData* gd)
 		setbkmode(TRANSPARENT);
 		char strMark[30];
 		sprintf(strMark, "×îÖÕµÃ·Ö:%d", s->mark);
-		outtextxy(600, 400, strMark);
+		outtextxy(500,300, strMark);
+		int reward = 0;
+		if (s->mark > 0) {
+			reward = s->mark / 10;
+		}
+		char strReward[30];
+		sprintf(strReward, "½±Àø%d¸ö·ÛÇò", reward);
+		gd->pinkballNum += reward;
+		gd->save(gd);
+		outtextxy(500, 500, strReward);
 		FlushBatchDraw();
 		Sleep(3000);
 		s->isQuit = true;
@@ -232,17 +243,17 @@ void levelTimerUpdate(struct levelTimer* s, struct gameData* gd)
 
 	if (s->isCountdownUpdate) {
 		s->isCountdownUpdate = false;
-		if (s->countdown.ss > 0) {
-			s->countdown.ss--;
+		if (s->countdown->ss > 0) {
+			s->countdown->ss--;
 		}
-		else if (s->countdown.mm > 0) {
-			s->countdown.mm--;
-			s->countdown.ss = 59;
+		else if (s->countdown->mm > 0) {
+			s->countdown->mm--;
+			s->countdown->ss = 59;
 		}
-		else if (s->countdown.hh > 0) {
-			s->countdown.hh--;
-			s->countdown.mm = 59;
-			s->countdown.ss = 59;
+		else if (s->countdown->hh > 0) {
+			s->countdown->hh--;
+			s->countdown->mm = 59;
+			s->countdown->ss = 59;
 		}
 		else {
 			s->isFinish = true;
@@ -324,6 +335,8 @@ void levelTimerInit(struct levelTimer* s, struct gameData* gd)
 	loadimage(s->imgBingo, "asset/levelScene/timer/bingo.png");
 	s->imgError = new IMAGE;
 	loadimage(s->imgError, "asset/levelScene/timer/error.png");
+	s->bkCountdown = new IMAGE;
+	loadimage(s->bkCountdown, "asset/levelScene/timer/bkCountdown.png");
 
 	s->backBtn = (struct btn*)malloc(sizeof(struct btn));
 	btnInit(s->backBtn, 0, 0, 128, 129, "asset/levelScene/timer/backBtn.png");
@@ -379,10 +392,12 @@ void levelTimerInit(struct levelTimer* s, struct gameData* gd)
 		s->soundFlag[i] = false;
 	}
 
+	s->countdown = (struct countdown*)malloc(sizeof(struct countdown));
+	if (s->countdown == NULL) return;
 	s->timingStart = clock();
-	s->countdown.hh = gd->countdown.hh;
-	s->countdown.mm = gd->countdown.mm;
-	s->countdown.ss = gd->countdown.ss;
+	s->countdown->hh = gd->countdown->hh;
+	s->countdown->mm = gd->countdown->mm;
+	s->countdown->ss = gd->countdown->ss;
 	s->isCountdownUpdate = true;
 }
 
@@ -391,6 +406,7 @@ void levelTimerDestroy(struct levelTimer* s)
 	delete s->bk;
 	delete s->imgBingo;
 	delete s->imgError;
+	delete s->bkCountdown;
 
 	btnDestroy(s->backBtn);
 	free(s->backBtn);
@@ -411,4 +427,6 @@ void levelTimerDestroy(struct levelTimer* s)
 		free(s->wordListsFlag[i]);
 	}
 	free(s->wordListsFlag);
+
+	free(s->countdown);
 }

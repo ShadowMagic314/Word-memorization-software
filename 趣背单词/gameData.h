@@ -51,7 +51,9 @@ struct gameData {
 	int lastMode;
 	bool isSwitchMode;
 
-	struct countdown countdown;//限时模式的倒计时时间
+	struct countdown* countdown;//限时模式的倒计时时间
+
+	int difficultyGrade;//无尽模式的难度等级//1-简单 2-困难 3-噩梦
 };
 
 void gameDataInit(struct gameData*gd);

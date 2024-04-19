@@ -122,9 +122,10 @@ void gameDataInit(struct gameData* gd)
 	gd->lastMode = -1;
 	gd->isSwitchMode = false;
 
-	gd->countdown.hh = 0;
-	gd->countdown.mm = 0;
-	gd->countdown.ss = 0;
+	gd->countdown = (struct countdown*)malloc(sizeof(struct countdown));
+	gd->countdown->hh = 0;
+	gd->countdown->mm = 0;
+	gd->countdown->ss = 0;
 }
 
 void gameDataDestroy(struct gameData* gd)
@@ -132,4 +133,6 @@ void gameDataDestroy(struct gameData* gd)
 	characterDatabaseDestroy(&gd->characterDB);
 	free(gd->ownFiveStarCharacters);
 	free(gd->ownFourStarCharacters);
+
+	free(gd->countdown);
 }
